@@ -53,14 +53,14 @@ fundoimg = pygame.image.load('fundo_jogo_certo.jpg')
 playerimg = pygame.image.load('dino_kawai_pe.png')
 player_agach = pygame.image.load('dino_kawai.png')
 playerX = 100
-playerY = 372
+playerY = 317
 playerY_change = 0
 playerimg_change = playerimg
 
 #enemy
 enemyimg = pygame.image.load('inimigo.png')
 enemyX = 800
-enemyY = 404
+enemyY = 349
 enemyY_change = 0
 
 #vida
@@ -88,7 +88,7 @@ def vida(vidaimg, x,y):
 
 def isCollision(enemyX,enemyY,playerX,playerY):
     distancia = math.sqrt(((enemyX - playerX) **2) + ((enemyY - playerY)**2))
-    if distancia < 70:
+    if distancia < 75:
         return True
     else:
         return False
@@ -105,6 +105,7 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+            rodando = True
         
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
@@ -132,8 +133,8 @@ while running:
     if playerY <=0:
         playerY = 0
     
-    elif playerY >= 372:
-        playerY = 372
+    elif playerY >= 317:
+        playerY = 317
 
     enemyX -=0.3
 
