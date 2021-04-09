@@ -47,7 +47,7 @@ screen = pygame.display.set_mode((1200,500))
 pygame.display.set_caption("jogo do dinossaurinho")
 icon = pygame.image.load('dino.png')
 pygame.display.set_icon(icon)
-fundoimg = pygame.image.load('fundo_jogo.jpg')
+fundoimg = pygame.image.load('fundo_jogo_certo.jpg')
 
 #player
 playerimg = pygame.image.load('dino_kawai_pe.png')
