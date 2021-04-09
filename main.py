@@ -42,11 +42,12 @@ pygame.init()
 
 screen = pygame.display.set_mode((1200,500))
 
-#title and icon
+#title and icon and background
 
 pygame.display.set_caption("jogo do dinossaurinho")
 icon = pygame.image.load('dino.png')
 pygame.display.set_icon(icon)
+fundoimg = pygame.image.load('fundo_jogo.jpg')
 
 #player
 playerimg = pygame.image.load('dino_kawai_pe.png')
@@ -60,7 +61,7 @@ playerimg_change = playerimg
 enemyimg = pygame.image.load('inimigo.png')
 enemyX = 800
 enemyY = 404
-playerY_change = 0
+enemyY_change = 0
 
 #vida
 vidaimg = pygame.image.load('vida.png')
@@ -68,9 +69,17 @@ vida_branca = pygame.image.load('vida_branca.png')
 vidaX = 0
 vidaY = 0
 vidaimg_change = vidaimg
+
+#jump
+
+
+
+
 def player(player,x,y):
     screen.blit(player, (x, y))
 
+def fundo(x,y):
+    screen.blit(fundoimg,(x,y))
 def enemy(x,y):
     screen.blit(enemyimg, (x, y))
 
@@ -99,23 +108,25 @@ while running:
         
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                 playerY_change = -0.2
-
+                playerY_change = -0.5
+                
             if event.key == pygame.K_UP:
-                 playerY_change = 0.2
+                playerY_change = 0.2
 
             if event.key == pygame.K_DOWN:
                 playerimg_change = player_agach
+                
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_SPACE:
-                playerY_change = 0
+                playerY_change = 0.5
             
             if event.key == pygame.K_DOWN:
                 playerimg_change = playerimg
             
             if event.key == pygame.K_UP:
                  playerY_change = 0
+                 
 
     playerY += playerY_change
     if playerY <=0:
@@ -126,11 +137,10 @@ while running:
 
     enemyX -=0.3
 
-    
-
+    fundo(-200,0)
+    vida(vidaimg_change,vidaX,vidaY)
     player(playerimg_change,playerX,playerY)
     enemy(enemyX,enemyY)
-    vida(vidaimg_change,vidaX,vidaY)
     collision = isCollision(enemyX,enemyY,playerX,playerY)
 
     if collision:
