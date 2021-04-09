@@ -47,7 +47,7 @@ screen = pygame.display.set_mode((1200,500))
 pygame.display.set_caption("jogo do dinossaurinho")
 icon = pygame.image.load('dino.png')
 pygame.display.set_icon(icon)
-fundoimg = pygame.image.load('fundo_jogo_certo.png')
+fundoimg = pygame.image.load('background.jpg')
 
 #player
 playerimg = pygame.image.load('dino_kawai_pe.png')
@@ -58,7 +58,7 @@ playerY_change = 0
 playerimg_change = playerimg
 
 #enemy
-enemyimg = pygame.image.load('inimigo.png')
+enemyimg = pygame.image.load('cacto1.png')
 enemyX = 800
 enemyY = 349
 enemyY_change = 0
@@ -108,10 +108,10 @@ while running:
         
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                playerY_change = -1
+                playerY_change = -0.5
                 
             if event.key == pygame.K_UP:
-                playerY_change = 1
+                playerY_change = 0.5
 
             if event.key == pygame.K_DOWN:
                 playerimg_change = player_agach
@@ -119,7 +119,7 @@ while running:
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_SPACE:
-                playerY_change = 1
+                playerY_change = 0.5
             
             if event.key == pygame.K_DOWN:
                 playerimg_change = playerimg
@@ -135,7 +135,7 @@ while running:
     elif playerY >= 317:
         playerY = 317
 
-    enemyX -=0.8
+    enemyX -=0.3
 
     fundo(-200,0)
     vida(vidaimg_change,vidaX,vidaY)
