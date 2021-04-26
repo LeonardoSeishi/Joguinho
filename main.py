@@ -57,7 +57,7 @@ playerY_change = 0
 playerimg_change = playerimg
 isJumping = False
 vidas = 3
-playerRect = pygame.Rect(playerX, playerY, 75, 75)
+playerRect = pygame.Rect(playerX, playerY, 64, 64)
 
 #enemy
 enemyimg1 = pygame.image.load('cacto1.png')
@@ -68,7 +68,7 @@ enemyX = 800
 enemyY = 349
 enemyY_change = 0
 velocidade = 0.8
-enemyRect = pygame.Rect(enemyX, enemyY, 75, 75)
+enemyRect = pygame.Rect(enemyX, enemyY, 40, 96)
 isHit = False
 
 #vida
