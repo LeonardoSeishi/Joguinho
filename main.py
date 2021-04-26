@@ -2,7 +2,6 @@ import pygame
 import math
 import PySimpleGUI as sg
 from random import choice
-import time 
 
 rodando = True
 running = False
@@ -34,11 +33,6 @@ janela.close()
 
 
 
-
-
-
-
-
 pygame.init()
 
 
@@ -52,6 +46,7 @@ pygame.display.set_icon(icon)
 fundoimg = pygame.image.load('background.jpg')
 
 gravity = 0.015
+aceleracao = 0.00001
 
 #player
 playerimg = pygame.image.load('dino_kawai_pe.png')
@@ -71,6 +66,7 @@ cacto = [enemyimg1, enemyimg2, enemyimg3]
 enemyX = 800
 enemyY = 349
 enemyY_change = 0
+velocidade = 0.8
 
 #vida
 vidaimg = pygame.image.load('vida.png')
@@ -147,9 +143,9 @@ while running:
         playerY_change = playerY_change + gravity
         
         
-
+    velocidade += aceleracao
     playerY += playerY_change
-    enemyX -=0.8
+    enemyX -= velocidade
 
     if enemyX < -100:
         enemyX = 1250
