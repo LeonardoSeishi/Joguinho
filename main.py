@@ -119,9 +119,6 @@ while running:
                 if not isJumping: 
                     isJumping = True
                     playerY_change = -2.5
-                
-            if event.key == pygame.K_UP:
-                playerY_change = 0.5
 
             if event.key == pygame.K_DOWN:
                 playerimg_change = player_agach
