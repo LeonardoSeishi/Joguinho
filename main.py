@@ -57,6 +57,7 @@ playerY_change = 0
 playerimg_change = playerimg
 isJumping = False
 vidas = 3
+playerRect = pygame.Rect(playerX, playerY, 75, 75)
 
 #enemy
 enemyimg1 = pygame.image.load('cacto1.png')
@@ -67,6 +68,8 @@ enemyX = 800
 enemyY = 349
 enemyY_change = 0
 velocidade = 0.8
+enemyRect = pygame.Rect(enemyX, enemyY, 75, 75)
+isHit = False
 
 #vida
 vidaimg = pygame.image.load('vida.png')
@@ -143,8 +146,15 @@ while running:
     velocidade += aceleracao
     playerY += playerY_change
     enemyX -= velocidade
+    playerRect.move(playerX, playerY)
+    playerRect.x = playerX
+    playerRect.y = playerY
+    # enemyRect.move_ip(enemyX, enemyY)
+    enemyRect.x = enemyX
+    enemyRect.y = enemyY
 
     if enemyX < -100:
+        isHit = False
         enemyX = 1250
         
 
@@ -157,13 +167,15 @@ while running:
     enemy(enemyimg1, enemyX,enemyY)
     collision = isCollision(enemyX,enemyY,playerX,playerY)
 
-    if collision:
-        if vidas == 3:  
+    if playerRect.colliderect(enemyRect) and not isHit:
+        isHit = True
+        if vidas == 3:
             vidaimg_change3 = vida_branca
         elif vidas == 2:
             vidaimg_change2 = vida_branca
         elif vidas == 1:
             vidaimg_change = vida_branca
+        vidas = vidas - 1
 
     if vidas == 0:
         running = False
