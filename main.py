@@ -45,8 +45,8 @@ icon = pygame.image.load('dino.png')
 pygame.display.set_icon(icon)
 fundoimg = pygame.image.load('background_grande.png')
 
-gravity = 0.25
-aceleracao = 0.0001
+gravity = 0.4
+aceleracao = 0.0005
 
 #player
 playerimg = pygame.image.load('dino_kawai_pe.png')
@@ -121,7 +121,7 @@ while running:
             if event.key == pygame.K_SPACE:
                 if not isJumping: 
                     isJumping = True
-                    playerY_change = -11
+                    playerY_change = -12.8
 
             if event.key == pygame.K_DOWN:
                 playerimg_change = player_agach
@@ -135,7 +135,7 @@ while running:
             if event.key == pygame.K_UP:
                  playerY_change = 0
 
-    if playerY_change <= 11.1 and playerY_change >= 10.9:
+    if playerY_change <= 12.801 and playerY_change >= 12.799:
         isJumping = False     
         playerY = 317        
 
