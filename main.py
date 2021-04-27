@@ -2,7 +2,8 @@ import pygame
 import math
 import PySimpleGUI as sg
 from random import choice
-
+import time
+from pontuacao import Pontuacao
 rodando = True
 running = False
 sg.theme('DarkAmber')
@@ -44,7 +45,8 @@ pygame.display.set_caption("jogo do dinossaurinho")
 icon = pygame.image.load('dino.png')
 pygame.display.set_icon(icon)
 fundoimg = pygame.image.load('background_grande.png')
-
+global pontos
+pontos = 0
 gravity = 0.4
 aceleracao = 0.0005
 
@@ -82,11 +84,12 @@ vidaimg_change = vidaimg
 vidaimg_change2 = vidaimg
 vidaimg_change3 = vidaimg
 
-#jump
+#pontuacao
 
+font = pygame.font.Font('freesansbold.ttf', 20)
+font_lost = pygame.font.Font('freesansbold.ttf', 60)
 
-
-
+testeee = Pontuacao(screen)
 def player(player,x,y):
     screen.blit(player, (x, y))
 
@@ -152,6 +155,7 @@ while running:
     # enemyRect.move_ip(enemyX, enemyY)
     enemyRect.x = enemyX
     enemyRect.y = enemyY
+    
 
     if enemyX < -100:
         isHit = False
@@ -166,6 +170,7 @@ while running:
     player(playerimg_change,playerX,playerY)
     enemy(enemyimg3, enemyX,enemyY)
     collision = isCollision(enemyX,enemyY,playerX,playerY)
+    testeee.contagem()
 
     if playerRect.colliderect(enemyRect) and not isHit:
         isHit = True
@@ -178,6 +183,8 @@ while running:
         vidas = vidas - 1
 
     if vidas == 0:
+        
+        time.sleep(5)
         running = False
             
     pygame.display.update()
