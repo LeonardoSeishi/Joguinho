@@ -4,7 +4,7 @@ from pygame.rect import Rect
 
 class Objeto(ABC):
 
-    def __init__(self, velocidade, x, y, img, largura, altura, ):
+    def __init__(self, velocidade, x, y, img, largura, altura):
         self._cordenadas = [x, y]
         self._altura = altura
         self._largura = largura
