@@ -89,7 +89,8 @@ vidaimg_change3 = vidaimg
 font = pygame.font.Font('freesansbold.ttf', 20)
 font_lost = pygame.font.Font('freesansbold.ttf', 60)
 
-testeee = Pontuacao(screen)
+pontuacao = Pontuacao(screen)#pontuacao
+
 def player(player,x,y):
     screen.blit(player, (x, y))
 
@@ -170,7 +171,9 @@ while running:
     player(playerimg_change,playerX,playerY)
     enemy(enemyimg3, enemyX,enemyY)
     collision = isCollision(enemyX,enemyY,playerX,playerY)
-    testeee.contagem()
+    pontuacao.contagem()
+
+    #pontuacao.mostrar_pontuacao() #mostra pontuacao
 
     if playerRect.colliderect(enemyRect) and not isHit:
         isHit = True
@@ -183,8 +186,8 @@ while running:
         vidas = vidas - 1
 
     if vidas == 0:
-        
         time.sleep(5)
         running = False
-            
+
+       
     pygame.display.update()
