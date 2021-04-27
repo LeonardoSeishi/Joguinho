@@ -1,22 +1,24 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 from pygame.rect import Rect
 
 
 class Objeto(ABC):
 
-    def __init__(self, img, x, y, largura, altura, velocidade):
-        self.__cordenadas = [x, y]
-        self.__altura = altura
-        self.__largura = largura
-        self.__imagem = img
-        self.__velocidade = velocidade
+    def __init__(self, velocidade, x, y, img, largura, altura, ):
+        self._cordenadas = [x, y]
+        self._altura = altura
+        self._largura = largura
+        self._imagem = img
+        self._velocidade = velocidade
 
         self.objRect = Rect(x, y, largura, altura)
 
+    @abstractmethod
     def desenha(self, screen):
-        screen.blit(self.__imagem, (self.__cordenadas[0], self.__cordenadas[1]))
+        screen.blit(self._imagem, (self._cordenadas[0], self._cordenadas[1]))
 
+    @abstractmethod
     def atualizar(self):
-        self.__cordenadas[0] += self.__velocidade
-        if self.__cordenadas[0] < 100:
+        self._cordenadas[0] += self._velocidade
+        if self._cordenadas[0] < 100:
             pass
