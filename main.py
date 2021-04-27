@@ -43,10 +43,10 @@ screen = pygame.display.set_mode((1200,500))
 pygame.display.set_caption("jogo do dinossaurinho")
 icon = pygame.image.load('dino.png')
 pygame.display.set_icon(icon)
-fundoimg = pygame.image.load('background.jpg')
+fundoimg = pygame.image.load('background_grande.png')
 
-gravity = 0.015
-aceleracao = 0.00001
+gravity = 0.25
+aceleracao = 0.0001
 
 #player
 playerimg = pygame.image.load('dino_kawai_pe.png')
@@ -67,7 +67,7 @@ cacto = [enemyimg1, enemyimg2, enemyimg3]
 enemyX = 800
 enemyY = 349
 enemyY_change = 0
-velocidade = 0.8
+velocidade = 5
 enemyRect = pygame.Rect(enemyX, enemyY, 40, 96)
 isHit = False
 
@@ -121,7 +121,7 @@ while running:
             if event.key == pygame.K_SPACE:
                 if not isJumping: 
                     isJumping = True
-                    playerY_change = -2.5
+                    playerY_change = -11
 
             if event.key == pygame.K_DOWN:
                 playerimg_change = player_agach
@@ -135,7 +135,7 @@ while running:
             if event.key == pygame.K_UP:
                  playerY_change = 0
 
-    if playerY_change <= 2.51 and playerY_change >= 2.49:
+    if playerY_change <= 11.1 and playerY_change >= 10.9:
         isJumping = False     
         playerY = 317        
 
@@ -164,7 +164,7 @@ while running:
     vida(vidaimg_change2,vidaX2,vidaY)
     vida(vidaimg_change3,vidaX3,vidaY)
     player(playerimg_change,playerX,playerY)
-    enemy(enemyimg1, enemyX,enemyY)
+    enemy(enemyimg3, enemyX,enemyY)
     collision = isCollision(enemyX,enemyY,playerX,playerY)
 
     if playerRect.colliderect(enemyRect) and not isHit:
