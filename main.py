@@ -1,9 +1,9 @@
 import pygame
 import math
 import PySimpleGUI as sg
-from random import choice
-import time
+import random
 from pontuacao import Pontuacao
+
 rodando = True
 running = False
 sg.theme('DarkAmber')
@@ -186,7 +186,6 @@ while running:
         vidas = vidas - 1
 
     if vidas == 0:
-        time.sleep(5)
         running = False
 
        
