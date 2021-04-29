@@ -18,7 +18,7 @@ class Menu():
             [sg.Text('',size = (6,1)),sg.Button('SAIR')]
          ]
 
-        self.__window = sg.Window("Sistema Chat Bot", self.__interface ,font=("Helvetica", 14))
+        self.__window = sg.Window("Nosso Joguinho", self.__interface ,font=("Helvetica", 14))
 
     def le_eventos(self):
         return self.__window.read()

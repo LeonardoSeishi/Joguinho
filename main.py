@@ -163,7 +163,7 @@ while running:
     fundox1 -= 0.2
     fundox2 -= 1
     fundox3 -= 1.5
-    fundox4 -= 2
+    fundox4 -= 2 
     fundox5 -= velocidade
     
 

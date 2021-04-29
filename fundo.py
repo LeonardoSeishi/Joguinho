@@ -11,11 +11,11 @@ class Background():
         self.__rect1.left = self.__rect.right
         self.__velocidade = velocidade
 
-    def draw(self, screen):
+    def desenha(self, screen):
         screen.blit(self.__imagem,self.__rect)
         screen.blit(self.__imagem1,self.__rect1)
 
-    def update(self):
+    def atualizar(self):
         self.__rect.left += self.__velocidade
         self.__rect1.left += self.__velocidade
 

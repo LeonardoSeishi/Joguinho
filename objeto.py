@@ -4,14 +4,41 @@ from pygame.rect import Rect
 
 class Objeto(ABC):
 
-    def __init__(self, velocidade, x, y, img, largura, altura):
+    def __init__(self, velocidade, x, y, imagem, largura, altura):
         self.__cordenadas = [x, y]
         self.__altura = altura
         self.__largura = largura
-        self.__imagem = img
+        self.__imagem = imagem
         self.__velocidade = velocidade
+        self.__objRect = Rect(x, y, largura, altura)
 
-        self.objRect = Rect(x, y, largura, altura)
+    @property
+    def cordenadas(self):
+        return self.__cordenadas
+
+    @property
+    def imagem(self):
+        return self.__imagem
+
+    @property
+    def velocidade(self):
+        return self.__velocidade
+
+    @property
+    def objRect(self):
+        return self.__objRect
+
+    @cordenadas.setter
+    def cordenadas(self, cordenadas:list):
+        self.__cordenadas = cordenadas
+
+    @imagem.setter
+    def imagem(self, imagem):
+        self.__imagem = imagem
+
+    @velocidade.setter
+    def velocidade(self, velocidade):
+        self.__velocidade = velocidade
 
     @abstractmethod
     def desenha(self, screen):

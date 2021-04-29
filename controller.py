@@ -36,16 +36,18 @@ img_cacto3 = pygame.image.load('cacto3.png')
 
 #intanciando classes
 dino = Jogador(0, 80, 317, img_jogador, 128, 112, img_vida)
-cacto = Obstaculo(5, 800, 345, img_cacto1, 40, 96)
-fundo1 = Background(5, chao)
-fundo2 = Background(1.5, montanha1)
-fundo3 = Background(1, montanha2)
-fundo4 = Background(0.5, montanha3)
-fundo5 = Background(0.01, ceu)
+cacto = Obstaculo(-5, 800, 345, img_cacto1, 40, 96)
+fundo1 = Background(-5, chao)
+fundo2 = Background(-1.5, montanha1)
+fundo3 = Background(-1, montanha2)
+fundo4 = Background(-0.5, montanha3)
+fundo5 = Background(-0.01, ceu)
+#font = pygame.font.Font('freesansbold.ttf', 20)
+#font_lost = pygame.font.Font('freesansbold.ttf', 60)
+pontuacao = Pontuacao(screen)
 
-class Menu_Controller:
-    def __init__(self, screen):
-        self.__screen = screen
+class Menu_Controller():
+    def __init__(self):
         self.__tela_inicial = Menu()
         self.__rodando = True
         self.__jogando =  False
@@ -62,6 +64,7 @@ class Menu_Controller:
             elif event == 'INICIAR JOGO':
                 self.__rodando = False
                 self.__jogando = True
+                self.jogar()
 
             elif event == 'DIFICULDADE':
                 #abrir interface de dificuldades
@@ -77,6 +80,7 @@ class Menu_Controller:
         self.__tela_inicial.fim()
  
     def jogar(self):
+
         while self.__jogando:
             
             for event in pygame.event.get():
@@ -97,32 +101,8 @@ class Menu_Controller:
                     if event.key == pygame.K_DOWN:
                         dino.imagem = img_jogador
                        
-            #enemyX -= velocidade
-            #playerRect.move(playerX, playerY)
-            #playerRect.x = playerX
-            #playerRect.y = playerY
-            # enemyRect.move_ip(enemyX, enemyY)
-            #enemyRect.x = enemyX
-            #enemyRect.y = enemyY
-            
-
-            if enemyX < -100:
-                isHit = False
-                enemyX = 1250
-                
-
-
-            #fundo(-200,0)
-            #vida(vidaimg_change,vidaX,vidaY)
-            #vida(vidaimg_change2,vidaX2,vidaY)
-            #vida(vidaimg_change3,vidaX3,vidaY)
-            #player(playerimg_change,playerX,playerY)
-            #enemy(enemyimg3, enemyX,enemyY)
-            #collision = isCollision(enemyX,enemyY,playerX,playerY)
-            #pontuacao.contagem()
-
-            #pontuacao.mostrar_pontuacao() #mostra pontuacao
-
+            if cacto.cordenadas[0] < -100:
+                dino.colisao = False
 
             #colisao
             if dino.objRect.colliderect(cacto.objRect) and not dino.colisao:
@@ -136,13 +116,28 @@ class Menu_Controller:
                 dino.vida = dino.vida - 1
 
             #game over
-            if dino.vida == 0:
+            if dino.vidas == 0:
                 self.__jogando = False
                 self.inicia()
 
-            
+            #desenhar
+            fundo5.desenha(screen)
+            fundo4.desenha(screen)
+            fundo3.desenha(screen)
+            fundo2.desenha(screen)
+            fundo1.desenha(screen)
+            dino.desenha(screen)
+            cacto.desenha(screen)
+            pontuacao.contagem()
+            #atualizar
+            fundo5.atualizar()
+            fundo4.atualizar()
+            fundo3.atualizar()
+            fundo2.atualizar()
+            fundo1.atualizar()
+            dino.atualizar()
+            cacto.atualizar()            
             pygame.display.update()
 
-
-
-   
+jogo = Menu_Controller()
+jogo.inicia()
