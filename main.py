@@ -102,13 +102,6 @@ def enemy(enemyimg,x,y):
 def vida(vidaimg, x,y):
     screen.blit(vidaimg,(x,y))
 
-def isCollision(enemyX,enemyY,playerX,playerY):
-    distancia = math.sqrt(((enemyX - playerX) **2) + ((enemyY - playerY)**2))
-    if distancia < 75:
-        return True
-    else:
-        return False
-
 
 
 #game loop
@@ -168,9 +161,8 @@ while running:
     vida(vidaimg_change,vidaX,vidaY)
     vida(vidaimg_change2,vidaX2,vidaY)
     vida(vidaimg_change3,vidaX3,vidaY)
-    player(playerimg_change,playerX,playerY)
     enemy(enemyimg3, enemyX,enemyY)
-    collision = isCollision(enemyX,enemyY,playerX,playerY)
+    player(playerimg_change,playerX,playerY)
     pontuacao.contagem()
 
     #pontuacao.mostrar_pontuacao() #mostra pontuacao

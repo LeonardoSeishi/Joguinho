@@ -5,17 +5,17 @@ from pygame.rect import Rect
 class Objeto(ABC):
 
     def __init__(self, velocidade, x, y, img, largura, altura):
-        self.__cordenadas = [x, y]
-        self.__altura = altura
-        self.__largura = largura
-        self.__imagem = img
-        self.__velocidade = velocidade
+        self.cordenadas = [x, y]
+        self.altura = altura
+        self.largura = largura
+        self.imagem = img
+        self.velocidade = velocidade
 
         self.objRect = Rect(x, y, largura, altura)
 
     @abstractmethod
     def desenha(self, screen):
-        screen.blit(self.__imagem, (self.__cordenadas[0], self.__cordenadas[1]))
+        screen.blit(self.imagem, (self.cordenadas[0], self.cordenadas[1]))
 
     @abstractmethod
     def atualizar(self):
