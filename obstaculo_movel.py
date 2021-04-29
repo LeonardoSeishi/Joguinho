@@ -1,12 +1,5 @@
-class ObstaculoMovel():
-    def __init__(self,velocidade:int,posicao:list,imagem):
-        self.__velocidade = velocidade
-        self.__posicao = posicao
-        self.__imagem = imagem
-    
+from objeto import Objeto
 
-    def desenhar(self):
-        pass
-    
-    def atualizar(self):
-        pass
+class Obstaculo_movel(Objeto):
+    def __init__(self, velocidade, x, y, imagem, largura, altura):
+        super().__init__(imagem, x, y, largura, altura, velocidade)

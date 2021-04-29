@@ -6,6 +6,16 @@ from interface import Menu
 from pontuacao import Pontuacao
 from jogador import Jogador
 from obstaculo import Obstaculo
+from fundo import Background
+
+#iniciando pygame
+pygame.init()
+screen = pygame.display.set_mode((1200,500))
+
+#titulo e icone
+pygame.display.set_caption("jogo do dinossaurinho")
+icon = pygame.image.load('dino.png')
+pygame.display.set_icon(icon)
 
 #imagens
 chao = pygame.image.load('chao_layer1.png')
@@ -17,11 +27,21 @@ ceu = pygame.image.load('ceu_layer5.png')
 img_jogador = pygame.image.load('dino_kawai_pe.png')
 img_jogador_agachado = pygame.image.load('dino_kawai.png')
 
+img_vida = pygame.image.load('vida.png')
+img_notvida = pygame.image.load('vida_branca.png')
+
 img_cacto1 = pygame.image.load('cacto1.png')
 img_cacto2 = pygame.image.load('cacto2.png')
 img_cacto3 = pygame.image.load('cacto3.png')
 
-
+#intanciando classes
+dino = Jogador(0, 80, 317, img_jogador, 128, 112, img_vida)
+cacto = Obstaculo(5, 800, 345, img_cacto1, 40, 96)
+fundo1 = Background(5, chao)
+fundo2 = Background(1.5, montanha1)
+fundo3 = Background(1, montanha2)
+fundo4 = Background(0.5, montanha3)
+fundo5 = Background(0.01, ceu)
 
 class Menu_Controller:
     def __init__(self, screen):
@@ -58,8 +78,6 @@ class Menu_Controller:
  
     def jogar(self):
         while self.__jogando:
-
-            self.__screen.fill((0,0,0))
             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -68,39 +86,24 @@ class Menu_Controller:
                 
                 if event.type == pygame.KEYDOWN: 
                     if event.key == pygame.K_SPACE:
-                        if not isJumping: 
-                            isJumping = True
-                            playerY_change = -12.8
+                        if not dino.pulando: 
+                            dino.pular()
 
                     if event.key == pygame.K_DOWN:
-                        playerimg_change = player_agach
+                       dino.imagem = img_jogador_agachado
                         
-
                 if event.type == pygame.KEYUP:
                     
                     if event.key == pygame.K_DOWN:
-                        playerimg_change = playerimg
-                    
-                    if event.key == pygame.K_UP:
-                        playerY_change = 0
-
-            if playerY_change <= 12.801 and playerY_change >= 12.799:
-                isJumping = False     
-                playerY = 317        
-
-            if isJumping:
-                playerY_change = playerY_change + gravity
-                
-                
-            velocidade += aceleracao
-            playerY += playerY_change
-            enemyX -= velocidade
-            playerRect.move(playerX, playerY)
-            playerRect.x = playerX
-            playerRect.y = playerY
+                        dino.imagem = img_jogador
+                       
+            #enemyX -= velocidade
+            #playerRect.move(playerX, playerY)
+            #playerRect.x = playerX
+            #playerRect.y = playerY
             # enemyRect.move_ip(enemyX, enemyY)
-            enemyRect.x = enemyX
-            enemyRect.y = enemyY
+            #enemyRect.x = enemyX
+            #enemyRect.y = enemyY
             
 
             if enemyX < -100:
@@ -120,17 +123,20 @@ class Menu_Controller:
 
             #pontuacao.mostrar_pontuacao() #mostra pontuacao
 
-            if playerRect.colliderect(enemyRect) and not isHit:
-                isHit = True
-                if vidas == 3:
-                    vidaimg_change3 = vida_branca
-                elif vidas == 2:
-                    vidaimg_change2 = vida_branca
-                elif vidas == 1:
-                    vidaimg_change = vida_branca
-                vidas = vidas - 1
 
-            if vidas == 0:
+            #colisao
+            if dino.objRect.colliderect(cacto.objRect) and not dino.colisao:
+                dino.colisao = True
+                if dino.vida == 3:
+                    dino.img_vida3 = img_notvida
+                elif dino.vida == 2:
+                    dino.img_vida2 = img_notvida
+                elif dino.vida == 1:
+                    dino.img_vida1 = img_notvida
+                dino.vida = dino.vida - 1
+
+            #game over
+            if dino.vida == 0:
                 self.__jogando = False
                 self.inicia()
 

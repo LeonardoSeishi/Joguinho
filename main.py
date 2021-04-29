@@ -45,6 +45,19 @@ pygame.display.set_caption("jogo do dinossaurinho")
 icon = pygame.image.load('dino.png')
 pygame.display.set_icon(icon)
 fundoimg = pygame.image.load('background_grande.png')
+
+
+chao = pygame.image.load('chao_layer1.png')
+montanha1 = pygame.image.load('montanha_layer2.png')
+montanha2 = pygame.image.load('montanha_layer3.png')
+montanha3 = pygame.image.load('montanha_layer4.png')
+ceu = pygame.image.load('ceu_layer5.png')
+fundox1 = 0
+fundox2 = 0
+fundox3 = 0
+fundox4 = 0
+fundox5 = 0
+
 global pontos
 pontos = 0
 gravity = 0.4
@@ -94,7 +107,7 @@ pontuacao = Pontuacao(screen)#pontuacao
 def player(player,x,y):
     screen.blit(player, (x, y))
 
-def fundo(x,y):
+def fundo(fundoimg,x,y):
     screen.blit(fundoimg,(x,y))
 def enemy(enemyimg,x,y):
     screen.blit(enemyimg, (x, y))
@@ -107,8 +120,6 @@ def vida(vidaimg, x,y):
 #game loop
 
 while running:
-
-    screen.fill((0,0,0))
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -146,9 +157,14 @@ while running:
     playerRect.move(playerX, playerY)
     playerRect.x = playerX
     playerRect.y = playerY
-    # enemyRect.move_ip(enemyX, enemyY)
+    enemyRect.move_ip(enemyX, enemyY)
     enemyRect.x = enemyX
     enemyRect.y = enemyY
+    fundox1 -= 0.2
+    fundox2 -= 1
+    fundox3 -= 1.5
+    fundox4 -= 2
+    fundox5 -= velocidade
     
 
     if enemyX < -100:
@@ -157,7 +173,11 @@ while running:
         
 
 
-    fundo(-200,0)
+    fundo(ceu,fundox1,0)
+    fundo(montanha3,fundox2,0)
+    fundo(montanha2,fundox3,0)
+    fundo(montanha1,fundox4,0)
+    fundo(chao,fundox5,0)
     vida(vidaimg_change,vidaX,vidaY)
     vida(vidaimg_change2,vidaX2,vidaY)
     vida(vidaimg_change3,vidaX3,vidaY)
@@ -177,7 +197,7 @@ while running:
             vidaimg_change = vida_branca
         vidas = vidas - 1
 
-    if vidas == 0:
+    if vidas == -1:
         running = False
 
        
