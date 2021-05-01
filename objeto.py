@@ -9,7 +9,7 @@ class Objeto():
         self.__cordenadas = [x, y]
         self.__altura = altura
         self.__largura = largura
-        self.__imagem = imagem
+        self.__imagem = pygame.image.load(imagem).convert_alpha()
         self.__velocidade = velocidade
         self.__aceleracao = aceleracao
         self.__objRect = pygame.Rect(x, y, largura, altura)
@@ -48,7 +48,7 @@ class Objeto():
 
     @imagem.setter
     def imagem(self, imagem):
-        self.__imagem = imagem
+        self.__imagem = pygame.image.load(imagem).convert_alpha()
 
     @velocidade.setter
     def velocidade(self, velocidade):

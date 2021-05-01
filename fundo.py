@@ -1,10 +1,12 @@
 from pygame.rect import Rect
+import pygame
+
 
 class Background():
     def __init__(self,velocidade, imagem, aceleracao):
-        self.__imagem = imagem
+        self.__imagem = pygame.image.load(imagem).convert_alpha()
         self.__rect = self.__imagem.get_rect()
-        self.__imagem1 = imagem
+        self.__imagem1 = pygame.image.load(imagem).convert_alpha()
         self.__rect1 = self.__imagem.get_rect()
         self.__rect.bottom = 500
         self.__rect1.bottom = 500

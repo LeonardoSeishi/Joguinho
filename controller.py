@@ -15,25 +15,25 @@ screen = pygame.display.set_mode((1200,500))
 
 #titulo e icone
 pygame.display.set_caption("jogo do dinossaurinho")
-icon = pygame.image.load('dino.png')
+icon = pygame.image.load('imagens/jogador/dino.png')
 pygame.display.set_icon(icon)
 
 #imagens
-chao = pygame.image.load('chao_layer1.png')
-montanha1 = pygame.image.load('montanha_layer2.png')
-montanha2 = pygame.image.load('montanha_layer3.png')
-montanha3 = pygame.image.load('montanha_layer4.png')
-ceu = pygame.image.load('ceu_layer5.png')
+chao = 'imagens/background/chao_layer1.png'
+montanha1 = 'imagens/background/montanha_layer2.png'
+montanha2 = 'imagens/background/montanha_layer3.png'
+montanha3 = 'imagens/background/montanha_layer4.png'
+ceu = 'imagens/background/ceu_layer5.png'
 
-img_jogador = pygame.image.load('dino_kawai_pe.png')
-img_jogador_agachado = pygame.image.load('dino_kawai.png')
+img_jogador = 'imagens/jogador/dino_kawai_pe.png'
+img_jogador_agachado = 'imagens/jogador/dino_kawai.png'
 
-img_vida = pygame.image.load('vida.png')
-img_notvida = pygame.image.load('vida_branca.png')
+img_vida = pygame.image.load('imagens/jogador/vida.png')
+img_notvida = pygame.image.load('imagens/jogador/vida_branca.png')
 
-img_cacto1 = pygame.image.load('cacto1.png')
-img_cacto2 = pygame.image.load('cacto2.png')
-img_cacto3 = pygame.image.load('cacto3.png')
+img_cacto1 = 'imagens/obstaculos/cacto1.png'
+img_cacto2 = 'imagens/obstaculos/cacto2.png'
+img_cacto3 = 'imagens/obstaculos/cacto3.png'
 
 #intanciando classes
 dino = Jogador(0, 80, 317, img_jogador, 128, 128, 2, img_vida)
@@ -52,7 +52,7 @@ class Menu_Controller():
     def __init__(self):
         self.__tela_inicial = Menu()
         self.__rodando = True
-        self.__jogando =  False
+        self.__jogando = False
 
     def inicia(self):
         self.__tela_inicial.tela_consulta()
@@ -66,6 +66,7 @@ class Menu_Controller():
             elif event == 'INICIAR JOGO':
                 self.__rodando = False
                 self.__jogando = True
+                self.__tela_inicial.fim()
                 self.jogar()
 
             elif event == 'DIFICULDADE':
