@@ -135,7 +135,6 @@ class Menu_Controller():
                 objeto.desenha(screen)
             pontuacao.contagem(screen)
 
-            print(dino.velocidade)
 
             pygame.display.update()
 
