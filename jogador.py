@@ -68,19 +68,22 @@ class Jogador(Objeto):
         if self.__pulando:
             self.velocidade = self.velocidade + self.__aceleracao
 
-        if self.cordenadas[1] + self.altura > 446 :
-            self.__pulando = False     
+        if self.cordenadas[1] + self.altura > 445:
+            self.__pulando = False
+            self.velocidade = 0     
             self.cordenadas[1] = 317
 
         if self.__agachado:
-            agachado = self.cordenadas[1] + 60
-            self.cordenadas[1] = agachado
-            self.objRect = pygame.Rect(self.cordenadas[0], (self.cordenadas[1]), self.largura, (self.altura/2))
+            if self.__pulando:
+                self.cordenadas[1] += 10
+            else:
+                self.cordenadas[1] = 381
+                self.objRect = pygame.Rect(self.cordenadas[0], (self.cordenadas[1]/2), self.largura, (self.altura/2))
 
  
     def pular(self):
         self.__pulando = True
-        self.velocidade = -28
+        self.velocidade = -5.5
 
 
             

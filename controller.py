@@ -35,15 +35,18 @@ img_cacto1 = 'imagens/obstaculos/cacto1.png'
 img_cacto2 = 'imagens/obstaculos/cacto2.png'
 img_cacto3 = 'imagens/obstaculos/cacto3.png'
 
+#velocidade geral
+velocidade = -1
+gravidade = 0.05
+aceleracao = -0.0001
 # intanciando classes
-dino = Jogador(0, 80, 317, img_jogador, 128, 128, 2, img_vida)
-cacto = Obstaculo(-15, 800, 345, img_cacto1, 40, 96, -0.008)
-#cacto1 = ObstaculoMovel(-15, 1600, 234, img_cacto3, 40, 120 , -0.008)
-fundo1 = Background(-15, chao, -0.008)
-fundo2 = Background(-5, montanha1, 0)
-fundo3 = Background(-4, montanha2, 0)
-fundo4 = Background(-3, montanha3, 0)
-fundo5 = Background(-1, ceu, 0)
+dino = Jogador(0, 80, 317, img_jogador, 128, 128, gravidade, img_vida)
+cacto = Obstaculo(velocidade, 800, 345, img_cacto1, 32, 96, aceleracao)
+fundo1 = Background(velocidade, chao, aceleracao)
+fundo2 = Background(-0.3, montanha1, 0)
+fundo3 = Background(-0.2, montanha2, 0)
+fundo4 = Background(-0.1, montanha3, 0)
+fundo5 = Background(-0.04, ceu, 0)
 #font = pygame.font.Font('freesansbold.ttf', 20)
 #font_lost = pygame.font.Font('freesansbold.ttf', 60)
 pontuacao = Pontuacao()
@@ -121,16 +124,6 @@ class Menu_Controller():
                     dino.set_img_vida1(img_notvida)
                 dino.vidas = dino.vidas - 1
 
-            '''if dino.objRect.colliderect(cacto1.objRect) and not dino.colisao:
-                dino.colisao = True
-                if dino.vidas == 3:
-                    dino.set_img_vida3(img_notvida)
-                elif dino.vidas == 2:
-                    dino.set_img_vida2(img_notvida)
-                elif dino.vidas == 1:
-                    dino.set_img_vida1(img_notvida)
-                dino.vidas = dino.vidas - 1'''
-
             # game over
             if dino.vidas == 0:
                 self.__jogando = False
@@ -141,6 +134,8 @@ class Menu_Controller():
                 objeto.atualizar()
                 objeto.desenha(screen)
             pontuacao.contagem(screen)
+
+            print(dino.velocidade)
 
             pygame.display.update()
 
