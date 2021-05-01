@@ -2,13 +2,13 @@ import pygame
 from objeto import Objeto
 
 class Jogador(Objeto):
-    def __init__(self, velocidade, x, y, imagem, largura, altura, img_vida):
-        super().__init__(velocidade, x, y, imagem, largura, altura)
+    def __init__(self, velocidade, x, y, imagem, largura, altura, aceleracao, img_vida):
+        super().__init__(velocidade, x, y, imagem, largura, altura, aceleracao)
         self.__vidas = 3
-        self.__vidaum = img_vida
+        self.__img_vida1 = img_vida
         self.__img_vida2 = img_vida
         self.__img_vida3 = img_vida
-        self.__gravidade = 0.4
+        self.__aceleracao = aceleracao
         self.__pulando = False
         self.__agachado = False
         self.__colisao = False
@@ -34,18 +34,6 @@ class Jogador(Objeto):
     def vidas(self, vidas):
         self.__vidas = vidas
 
-    @vidaum.setter
-    def vidaum(self, img):
-        self.__vidaum = img
-
-    @img_vida2.setter
-    def img_vida2(self, imagem):
-        self.__img_vida2 = imagem
-
-    @img_vida3.setter
-    def img_vida3(self, imagem):
-        self.__img_vida3 = imagem
-
     @pulando.setter
     def pulando(self, boolean):
         self.__pulando = boolean
@@ -58,6 +46,14 @@ class Jogador(Objeto):
     def colisao(self, boolean):
         self.__colisao = boolean
 
+    def set_img_vida1(self, img):
+        self.__img_vida1 = img
+
+    def set_img_vida2(self, imagem):
+        self.__img_vida2 = imagem
+
+    def set_img_vida3(self, imagem):
+        self.__img_vida3 = imagem
 
     def desenha(self, screen):
         screen.blit(self.imagem, (self.cordenadas))
@@ -67,22 +63,24 @@ class Jogador(Objeto):
 
     def atualizar(self):
         self.cordenadas[1] += self.velocidade
+        self.objRect = pygame.Rect(self.cordenadas[0], self.cordenadas[1], self.largura, self.altura)
 
-        if self.velocidade<= 11.1 and self.velocidade >= 10.9:
+        if self.__pulando:
+            self.velocidade = self.velocidade + self.__aceleracao
+
+        if self.cordenadas[1] + self.altura > 446 :
             self.__pulando = False     
             self.cordenadas[1] = 317
 
-        if self.__pulando:
-            self.velocidade = self.velocidade + self.__gravidade
-
-        if self.velocidade <= 12.801 and self.velocidade >= 12.799:
-            self.__pulando = False     
-            self.cordenadas[1] = 317  
+        if self.__agachado:
+            agachado = self.cordenadas[1] + 60
+            self.cordenadas[1] = agachado
+            self.objRect = pygame.Rect(self.cordenadas[0], (self.cordenadas[1]), self.largura, (self.altura/2))
 
  
     def pular(self):
         self.__pulando = True
-        self.velocidade = -12.8
+        self.velocidade = -28
 
 
             

@@ -72,7 +72,7 @@ playerY_change = 0
 playerimg_change = playerimg
 isJumping = False
 vidas = 3
-playerRect = pygame.Rect(playerX, playerY, 64, 64)
+playerRect = pygame.Rect(playerX, playerY, 128, 128)
 
 #enemy
 enemyimg1 = pygame.image.load('cacto1.png')
@@ -102,7 +102,7 @@ vidaimg_change3 = vidaimg
 font = pygame.font.Font('freesansbold.ttf', 20)
 font_lost = pygame.font.Font('freesansbold.ttf', 60)
 
-pontuacao = Pontuacao(screen)#pontuacao
+pontuacao = Pontuacao()#pontuacao
 
 def player(player,x,y):
     screen.blit(player, (x, y))
@@ -183,7 +183,7 @@ while running:
     vida(vidaimg_change3,vidaX3,vidaY)
     enemy(enemyimg3, enemyX,enemyY)
     player(playerimg_change,playerX,playerY)
-    pontuacao.contagem()
+    pontuacao.contagem(screen)
 
     #pontuacao.mostrar_pontuacao() #mostra pontuacao
 

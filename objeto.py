@@ -1,16 +1,18 @@
 from abc import ABC, abstractmethod
-from pygame.rect import Rect
+import pygame
 
 
-class Objeto(ABC):
 
-    def __init__(self, velocidade, x, y, imagem, largura, altura):
+class Objeto():
+
+    def __init__(self, velocidade, x, y, imagem, largura, altura, aceleracao):
         self.__cordenadas = [x, y]
         self.__altura = altura
         self.__largura = largura
         self.__imagem = imagem
         self.__velocidade = velocidade
-        self.__objRect = Rect(x, y, largura, altura)
+        self.__aceleracao = aceleracao
+        self.__objRect = pygame.Rect(x, y, largura, altura)
 
     @property
     def cordenadas(self):
@@ -23,6 +25,18 @@ class Objeto(ABC):
     @property
     def velocidade(self):
         return self.__velocidade
+
+    @property
+    def largura(self):
+        return self.__largura
+
+    @property
+    def altura(self):
+        return self.__altura
+
+    @property
+    def aceleracao(self):
+        return self.__aceleracao
 
     @property
     def objRect(self):
@@ -40,12 +54,20 @@ class Objeto(ABC):
     def velocidade(self, velocidade):
         self.__velocidade = velocidade
 
-    @abstractmethod
+    @aceleracao.setter
+    def aceleracao(self, A):
+        self.__aceleracao = A
+
+    @objRect.setter
+    def objRect(self, obj):
+        self.__objRect = obj
+
     def desenha(self, screen):
         screen.blit(self.__imagem, (self.__cordenadas[0], self.__cordenadas[1]))
 
-    @abstractmethod
     def atualizar(self):
+        self.__velocidade += self.__aceleracao
         self.__cordenadas[0] += self.__velocidade
-        if self.__cordenadas[0] < 100:
-            pass
+        self.__objRect = pygame.Rect(self.__cordenadas[0], self.__cordenadas[1], self.__largura, self.__altura)
+        if self.__cordenadas[0] < -100:
+            self.__cordenadas[0] = 1250
