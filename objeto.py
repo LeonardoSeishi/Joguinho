@@ -12,7 +12,9 @@ class Objeto():
         self.__imagem = pygame.image.load(imagem).convert_alpha()
         self.__velocidade = velocidade
         self.__aceleracao = aceleracao
-        self.__objRect = pygame.Rect(x, y, largura, altura)
+        self.__objRect = self.imagem.get_rect()
+        self.objRect.x = x
+        self.objRect.y = y
 
     @property
     def cordenadas(self):
@@ -63,7 +65,7 @@ class Objeto():
         self.__objRect = obj
 
     def desenha(self, screen):
-        screen.blit(self.__imagem, (self.__cordenadas[0], self.__cordenadas[1]))
+        screen.blit(self.imagem, self.objRect)
 
     def atualizar(self):
         self.__velocidade += self.__aceleracao
