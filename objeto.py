@@ -12,7 +12,7 @@ class Objeto():
         self.__imagem = imagem
         self.__velocidade = velocidade
         self.__aceleracao = aceleracao
-        self.__objRect = self.imagem[aux].get_rect()
+        self.__objRect = self.__imagem[aux].get_rect()
         self.objRect.x = x
         self.objRect.y = y
 
