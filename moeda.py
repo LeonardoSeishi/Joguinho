@@ -31,6 +31,9 @@ class Moeda(Objeto):
         self.objRect = pygame.Rect(self.cordenadas[0], self.cordenadas[1], self.largura, self.altura)
         if self.__colisao:
             self.cordenadas[0] = 2000
+            y = random.randint(150, 290)
+            self.cordenadas[1] = y
+            self.__colisao = False
         if self.cordenadas[0] < -100:
             self.cordenadas[0] = 3400
             y = random.randint(150, 290)
