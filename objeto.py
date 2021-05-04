@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 import pygame
-
+aux = 0
 
 
 class Objeto():
@@ -9,10 +9,10 @@ class Objeto():
         self.__cordenadas = [x, y]
         self.__altura = altura
         self.__largura = largura
-        self.__imagem = pygame.image.load(imagem).convert_alpha()
+        self.__imagem = imagem
         self.__velocidade = velocidade
         self.__aceleracao = aceleracao
-        self.__objRect = self.imagem.get_rect()
+        self.__objRect = self.imagem[aux].get_rect()
         self.objRect.x = x
         self.objRect.y = y
 
@@ -50,11 +50,19 @@ class Objeto():
 
     @imagem.setter
     def imagem(self, imagem):
-        self.__imagem = pygame.image.load(imagem).convert_alpha()
+        self.__imagem = imagem
 
     @velocidade.setter
     def velocidade(self, velocidade):
         self.__velocidade = velocidade
+
+    @largura.setter
+    def largura(self, largura):
+        self.__largura = largura
+
+    @altura.setter
+    def altura(self, altura):
+        self.__altura = altura
 
     @aceleracao.setter
     def aceleracao(self, A):
@@ -65,7 +73,7 @@ class Objeto():
         self.__objRect = obj
 
     def desenha(self, screen):
-        screen.blit(self.imagem, self.objRect)
+        screen.blit(self.imagem[aux], self.objRect)
 
     def atualizar(self):
         self.__velocidade += self.__aceleracao

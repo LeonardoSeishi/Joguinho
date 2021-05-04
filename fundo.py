@@ -1,26 +1,28 @@
-from objeto import Objeto
+import pygame
 
-
-class Background(Objeto):
-    def __init__(self, velocidade, imagem, aceleracao):
-        super().__init__(velocidade, 0, 0, imagem, 0, 0, aceleracao)
-        self.objRect.bottom = 500
-        self.__backLoop = Objeto(velocidade, 0, 0, imagem, 0, 0, aceleracao)
-        self.__backLoop.objRect.bottom = 500
-        self.__backLoop.objRect.left = self.objRect.right
+class Background():
+    def __init__(self,velocidade, imagem, aceleracao):
+        self.__imagem = pygame.image.load(imagem).convert_alpha()
+        self.__rect = self.__imagem.get_rect()
+        self.__imagem1 = pygame.image.load(imagem).convert_alpha()
+        self.__rect1 = self.__imagem.get_rect()
+        self.__rect.bottom = 500
+        self.__rect1.bottom = 500
+        self.__rect1.left = self.__rect.right
+        self.__velocidade = velocidade
+        self.__aceleracao = aceleracao
 
     def desenha(self, screen):
-        super().desenha(screen)
-        self.__backLoop.desenha(screen)
+        screen.blit(self.__imagem,self.__rect)
+        screen.blit(self.__imagem1,self.__rect1)
 
     def atualizar(self):
-        self.velocidade += self.aceleracao
-        self.__backLoop.velocidade += self.__backLoop.aceleracao
-        self.objRect.left += self.velocidade
-        self.__backLoop.objRect.left += self.__backLoop.velocidade
+        self.__velocidade += self.__aceleracao
+        self.__rect.left += self.__velocidade
+        self.__rect1.left += self.__velocidade
 
-        if self.objRect.right < 0:
-            self.objRect.left = self.__backLoop.objRect.right
+        if self.__rect.right < 0:
+            self.__rect.left = self.__rect1.right
 
-        if self.__backLoop.objRect.right < 0:
-            self.__backLoop.objRect.left = self.objRect.right
+        if self.__rect1.right < 0:
+            self.__rect1.left = self.__rect.right

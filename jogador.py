@@ -1,6 +1,7 @@
 import pygame
 from objeto import Objeto
 
+
 class Jogador(Objeto):
     def __init__(self, velocidade, x, y, imagem, largura, altura, aceleracao, img_vida):
         super().__init__(velocidade, x, y, imagem, largura, altura, aceleracao)
@@ -12,6 +13,8 @@ class Jogador(Objeto):
         self.__pulando = False
         self.__agachado = False
         self.__colisao = False
+        self.__animacao = 0
+        self.__tempo = 0
 
 
     @property
@@ -56,7 +59,11 @@ class Jogador(Objeto):
         self.__img_vida3 = imagem
 
     def desenha(self, screen):
-        screen.blit(self.imagem, (self.cordenadas))
+        self.__tempo += 1
+        if self.__tempo == 8:
+            self.__tempo = 0
+            self.__animacao = (self.__animacao + 1) % len(self.imagem)
+        screen.blit(self.imagem[self.__animacao], (self.cordenadas))
         screen.blit(self.__img_vida1, (0, 0))
         screen.blit(self.__img_vida2, (52, 0))
         screen.blit(self.__img_vida3, (104, 0))
@@ -68,22 +75,21 @@ class Jogador(Objeto):
         if self.__pulando:
             self.velocidade = self.velocidade + self.__aceleracao
 
-        if self.cordenadas[1] + self.altura > 445:
+        if self.cordenadas[1] + self.altura > 440:
             self.__pulando = False
             self.velocidade = 0     
-            self.cordenadas[1] = 317
+            self.cordenadas[1] = 320
 
         if self.__agachado:
             if self.__pulando:
-                self.cordenadas[1] += 10
+                self.cordenadas[1] += 50
             else:
-                self.cordenadas[1] = 381
-                self.objRect = pygame.Rect(self.cordenadas[0], (self.cordenadas[1]/2), self.largura, (self.altura/2))
+                self.cordenadas[1] = 364
 
  
     def pular(self):
         self.__pulando = True
-        self.velocidade = -5.5
+        self.velocidade = -10
 
 
             

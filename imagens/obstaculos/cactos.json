@@ -1,0 +1,28 @@
+{"frames":
+    {"cactos0.png":
+        {"frame":{"x":0,"y":0,"w":40,"h":84},
+        "rotated":false,
+        "trimmed":false,
+        "spriteSourceSize":{"x":0,"y":0,"w":40,"h":84},
+        "sourceSize":{"w":40,"h":84}},
+        
+    "cactos1.png":
+        {"frame":{"x":0,"y":84,"w":40,"h":84},
+        "rotated":false,
+        "trimmed":false,
+        "spriteSourceSize":{"x":0,"y":0,"w":40,"h":84},
+        "sourceSize":{"w":40,"h":84}},
+        
+    "cactos2.png":
+        {"frame":{"x":0,"y":168,"w":40,"h":84},
+        "rotated":false,
+        "trimmed":false,
+        "spriteSourceSize":{"x":0,"y":0,"w":40,"h":84},
+        "sourceSize":{"w":40,"h":84}}},
+        
+"meta":
+    {"app":"https://github.com/piskelapp/piskel/",
+    "version":"1.0",
+    "image":"cactos.png",
+    "format":"RGBA8888",
+    "size":{"w":40,"h":252}}}

@@ -6,8 +6,10 @@ from interface import Menu
 from pontuacao import Pontuacao
 from jogador import Jogador
 from obstaculo import Obstaculo
-from obstaculo_movel import ObstaculoMovel
 from fundo import Background
+from moeda import Moeda
+from spritesheet import Spritesheet
+
 
 # iniciando pygame
 pygame.init()
@@ -25,33 +27,43 @@ montanha2 = 'imagens/background/montanha_layer3.png'
 montanha3 = 'imagens/background/montanha_layer4.png'
 ceu = 'imagens/background/ceu_layer5.png'
 
-img_jogador = 'imagens/jogador/dino_kawai_pe.png'
-img_jogador_agachado = 'imagens/jogador/dino_kawai.png'
+#img_jogador = 'imagens/jogador/dino_kawai_pe.png'
+#img_jogador_agachado = 'imagens/jogador/dino_kawai.png'
 
 img_vida = pygame.image.load('imagens/jogador/vida.png')
 img_notvida = pygame.image.load('imagens/jogador/vida_branca.png')
 
-img_cacto1 = 'imagens/obstaculos/cacto1.png'
-img_cacto2 = 'imagens/obstaculos/cacto2.png'
-img_cacto3 = 'imagens/obstaculos/cacto3.png'
+#img_cacto1 = 'imagens/obstaculos/cacto1.png'
+#img_cacto2 = 'imagens/obstaculos/cacto2.png'
+#img_cacto3 = 'imagens/obstaculos/cacto3.png'
 
+#spritesheet
+dino_sprite = Spritesheet('imagens/jogador/dino_azul.png')
+dino_sheet = [dino_sprite.parse_sprite('dino_azul0.png'),dino_sprite.parse_sprite('dino_azul1.png')]
+dinoag_sprite = Spritesheet('imagens/jogador/dino_agachado.png')
+dinoag_sheet = [dinoag_sprite.parse_sprite('dino_agachado0.png'),dinoag_sprite.parse_sprite('dino_agachado1.png')]
+cacto_sprite = Spritesheet('imagens/obstaculos/cactos.png')
+cacto_sheet = [cacto_sprite.parse_sprite('cactos0.png'),cacto_sprite.parse_sprite('cactos1.png'),cacto_sprite.parse_sprite('cactos2.png')]
+moeda_sprite = Spritesheet('imagens/itens/Coin.png')
+moeda_sheet = [moeda_sprite.parse_sprite('Coin0.png'),moeda_sprite.parse_sprite('Coin1.png'),moeda_sprite.parse_sprite('Coin2.png'),moeda_sprite.parse_sprite('Coin3.png'),moeda_sprite.parse_sprite('Coin4.png'),moeda_sprite.parse_sprite('Coin5.png'),moeda_sprite.parse_sprite('Coin6.png'),moeda_sprite.parse_sprite('Coin7.png'),moeda_sprite.parse_sprite('Coin8.png')]
 #velocidade geral
-velocidade = -1
-gravidade = 0.05
+velocidade = -4
+gravidade = 0.2
 aceleracao = -0.0001
 # intanciando classes
-dino = Jogador(0, 80, 317, img_jogador, 128, 128, gravidade, img_vida)
-cacto = Obstaculo(velocidade, 800, 345, img_cacto1, 32, 96, aceleracao)
+dino = Jogador(0, 80, 320, dino_sheet, 128, 120, gravidade, img_vida)
+cacto = Obstaculo(velocidade, 800, 350, cacto_sheet, 32, 96, aceleracao)
 fundo1 = Background(velocidade, chao, aceleracao)
-fundo2 = Background(-0.3, montanha1, 0)
-fundo3 = Background(-0.2, montanha2, 0)
-fundo4 = Background(-0.1, montanha3, 0)
-fundo5 = Background(-0.04, ceu, 0)
+fundo2 = Background(-3, montanha1, 0)
+fundo3 = Background(-2, montanha2, 0)
+fundo4 = Background(-1, montanha3, 0)
+fundo5 = Background(-0.5, ceu, 0)
+moeda = Moeda(velocidade, 1000, 220, moeda_sheet, 48, 48, aceleracao)
 #font = pygame.font.Font('freesansbold.ttf', 20)
 #font_lost = pygame.font.Font('freesansbold.ttf', 60)
 pontuacao = Pontuacao()
 
-allObjects = [fundo5, fundo4, fundo3, fundo2, fundo1, dino, cacto,]
+allObjects = [fundo5, fundo4, fundo3, fundo2, fundo1, dino, cacto, moeda]
 
 class Menu_Controller():
     def __init__(self):
@@ -101,14 +113,19 @@ class Menu_Controller():
                             dino.pular()
 
                     if event.key == pygame.K_DOWN:
-                            dino.imagem = img_jogador_agachado
+                            dino.imagem = dinoag_sheet
                             dino.agachado = True
+                            dino.altura = 76
+                            dino.largura = 160
                             
                 if event.type == pygame.KEYUP:
                     
                     if event.key == pygame.K_DOWN:
-                        dino.imagem = img_jogador
+                        dino.imagem = dino_sheet
                         dino.agachado = False
+                        dino.altura = 120
+                        dino.largura = 128
+
                        
             if cacto.cordenadas[0] < -50:
                 dino.colisao = False
@@ -123,6 +140,9 @@ class Menu_Controller():
                 elif dino.vidas == 1:
                     dino.set_img_vida1(img_notvida)
                 dino.vidas = dino.vidas - 1
+
+            if dino.objRect.colliderect(moeda.objRect):
+                moeda.colisao = True
 
             # game over
             if dino.vidas == 0:
