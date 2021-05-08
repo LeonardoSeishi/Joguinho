@@ -20,7 +20,7 @@ class Moeda(Objeto):
 
     def desenha(self, screen):
         self.__tempo += 1
-        if self.__tempo == 3:
+        if self.__tempo == 5:
             self.__tempo = 0
             self.__animacao = (self.__animacao + 1) % len(self.imagem)
         screen.blit(self.imagem[self.__animacao], (self.cordenadas))

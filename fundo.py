@@ -9,7 +9,7 @@ class Background(Objeto):
         self.objRect.bottom = 500
         self.__backLoop = Objeto(0, 0, 0, [imgaux], 3500, 500, 0)
         self.__backLoop.objRect.bottom = 500
-        self.objRect.right = self.__backLoop.objRect.left
+        self.objRect.right = self.__backLoop.objRect.left 
 
 
     def desenha(self, screen):

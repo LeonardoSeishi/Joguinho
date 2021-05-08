@@ -32,24 +32,37 @@ img_vida = pygame.image.load('imagens/jogador/vida.png')
 img_notvida = pygame.image.load('imagens/jogador/vida_branca.png')
 
 #spritesheet
+
+#dinossauro
 dino_sprite = Spritesheet('imagens/jogador/dino_azul.png')
 dino_sheet = [dino_sprite.parse_sprite('dino_azul0.png'),dino_sprite.parse_sprite('dino_azul1.png')]
 dinoag_sprite = Spritesheet('imagens/jogador/dino_agachado.png')
 dinoag_sheet = [dinoag_sprite.parse_sprite('dino_agachado0.png'),dinoag_sprite.parse_sprite('dino_agachado1.png')]
+#obstaculos
 cacto_sprite = Spritesheet('imagens/obstaculos/cactos.png')
 cacto_sheet = [cacto_sprite.parse_sprite('cactos0.png'),cacto_sprite.parse_sprite('cactos1.png'),cacto_sprite.parse_sprite('cactos2.png')]
+passaro_sprite = Spritesheet('imagens/obstaculos/passarinho.png')
+passaro_sheet = [passaro_sprite.parse_sprite('passarinho0.png'),passaro_sprite.parse_sprite('passarinho1.png'),passaro_sprite.parse_sprite('passarinho2.png'),passaro_sprite.parse_sprite('passarinho3.png')]
+#itens
 moeda_sprite = Spritesheet('imagens/itens/Coin.png')
 moeda_sheet = [moeda_sprite.parse_sprite('Coin0.png'),moeda_sprite.parse_sprite('Coin1.png'),moeda_sprite.parse_sprite('Coin2.png'),moeda_sprite.parse_sprite('Coin3.png'),moeda_sprite.parse_sprite('Coin4.png'),moeda_sprite.parse_sprite('Coin5.png'),moeda_sprite.parse_sprite('Coin6.png'),moeda_sprite.parse_sprite('Coin7.png'),moeda_sprite.parse_sprite('Coin8.png')]
+mini_moeda_sprite = Spritesheet('imagens/itens/moeda_pequena.png')
+mini_moeda_sheet = [mini_moeda_sprite.parse_sprite('moeda_pequena0.png'),mini_moeda_sprite.parse_sprite('moeda_pequena1.png'),mini_moeda_sprite.parse_sprite('moeda_pequena2.png'),mini_moeda_sprite.parse_sprite('moeda_pequena3.png')]
+poderes = Spritesheet('imagens/itens/poderes.png')
+poderes_sheet = [poderes.parse_sprite('poderes0.png'),poderes.parse_sprite('poderes1.png')]
+
 #velocidade geral
-velocidade = -8
-velocidade_pulo = -12
-gravidade = 0.3
-aceleracao = -0.0001
+velocidade = -9
+velocidade_pulo = -17
+gravidade = 0.6
+aceleracao = -0.0002
 # intanciando classes
-dino = Jogador(0, 80, 320, dino_sheet, 128, 120, gravidade, img_vida, velocidade_pulo)
-cacto = Obstaculo(velocidade, 800, 350, cacto_sheet, 32, 96, aceleracao)
+dino = Jogador(0, 80, 320, dino_sheet, 128, 120, gravidade, img_vida,poderes_sheet[0], poderes_sheet[1], velocidade_pulo)
+cacto = Obstaculo(velocidade, 800, 350, cacto_sheet , 32, 96, aceleracao)
 mapa = Background_controller(layers,velocidade, aceleracao)
 moeda = Moeda(velocidade, 1000, 220, moeda_sheet, 48, 48, aceleracao)
+mini_moeda = Moeda(0, 970, 25, mini_moeda_sheet, 32, 32, 0)
+#passaro = Obstaculo(velocidade + 2, 800, --range(200,350), 96,96, aceleracao)
 #font = pygame.font.Font('freesansbold.ttf', 20)
 #font_lost = pygame.font.Font('freesansbold.ttf', 60)
 pontuacao = Pontuacao()
@@ -58,7 +71,7 @@ pontuacao = Pontuacao()
 clock = pygame.time.Clock()
 fps = 60
 
-allObjects = [mapa, dino, cacto, moeda]
+allObjects = [dino, cacto, moeda, mini_moeda]
 
 class Menu_Controller():
     def __init__(self):
@@ -146,6 +159,7 @@ class Menu_Controller():
                 self.inicia()
 
             # atualizar e desenhar
+            mapa.loop(screen)
             for objeto in allObjects:
                 objeto.atualizar()
                 objeto.desenha(screen)

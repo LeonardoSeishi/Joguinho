@@ -3,16 +3,20 @@ from objeto import Objeto
 
 
 class Jogador(Objeto):
-    def __init__(self, velocidade, x, y, imagem, largura, altura, aceleracao, img_vida, velocidade_pulo):
+    def __init__(self, velocidade, x, y, imagem, largura, altura, aceleracao, img_vida, img_escudo, img_dj, velocidade_pulo):
         super().__init__(velocidade, x, y, imagem, largura, altura, aceleracao)
         self.__vidas = 3
         self.__img_vida1 = img_vida
         self.__img_vida2 = img_vida
         self.__img_vida3 = img_vida
+        self.__img_escudo = img_escudo
+        self.__img_dj = img_dj
         self.__aceleracao = aceleracao
         self.__pulando = False
         self.__agachado = False
         self.__colisao = False
+        self.__escudo = False
+        self.__double_jump = False
         self.__animacao = 0
         self.__tempo = 0
         self.__velocidade_pulo = velocidade_pulo
@@ -34,6 +38,14 @@ class Jogador(Objeto):
     def colisao(self):
         return self.__colisao
 
+    @property
+    def escudo(self):
+        return self.__escudo
+
+    @property
+    def double_jump(self):
+        return self.__double_jump
+
     @vidas.setter
     def vidas(self, vidas):
         self.__vidas = vidas
@@ -49,6 +61,14 @@ class Jogador(Objeto):
     @colisao.setter
     def colisao(self, boolean):
         self.__colisao = boolean
+
+    @escudo.setter
+    def escudo(self, boolean):
+        self.__escudo = boolean
+
+    @double_jump.setter
+    def double_jump(self, boolean):
+        self.__double_jump = boolean
 
     def set_img_vida1(self, img):
         self.__img_vida1 = img
@@ -68,6 +88,8 @@ class Jogador(Objeto):
         screen.blit(self.__img_vida1, (0, 0))
         screen.blit(self.__img_vida2, (52, 0))
         screen.blit(self.__img_vida3, (104, 0))
+        screen.blit(self.__img_escudo,(400,1))
+        screen.blit(self.__img_dj,(480,1))
 
     def atualizar(self):
         self.cordenadas[1] += self.velocidade

@@ -10,8 +10,10 @@ class Background_controller():
             self.__layers[(len(self.__layers)-1) - layer].aceleracao = self.__aceleracao
             if layer == 0:
                 self.__velocidade += 4
-            else:
+            elif layer < len(self.__layers):
                 self.__velocidade += 1
+            else:
+                self.__velocidade = -1
 
     @property 
     def velocidade(self):
@@ -35,11 +37,9 @@ class Background_controller():
     def exclui_layer(self, valor):
         self.__layers.pop(valor)
 
-    def desenha(self, screen):
-        for layer in range(len(self.__layers)):
-            self.__layers[layer].desenha(screen)
-        
-    def atualizar(self):
+    def loop(self, screen):
         for layer in range(len(self.__layers)):
             self.__layers[layer].atualizar()
+            self.__layers[layer].desenha(screen)
+
 
