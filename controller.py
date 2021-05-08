@@ -138,6 +138,7 @@ class Menu_Controller():
 
             if dino.objRect.colliderect(moeda.objRect):
                 moeda.colisao = True
+                pontuacao.pontos = 75
 
             # game over
             if dino.vidas == 0:

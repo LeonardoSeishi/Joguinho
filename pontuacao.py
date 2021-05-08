@@ -12,6 +12,14 @@ class Pontuacao():
         self.__font_f = pygame.font.Font('freesansbold.ttf', 40)
         self.__arquivo = 'highscore.txt'
 
+    @property
+    def pontos(self):
+        return self.__pontos
+
+    @pontos.setter
+    def pontos(self, valor):
+        self.__pontos += valor
+
     def contagem(self, screen):
         self.__pontos += 1
         texto = self.__font.render('pontos: '+ str(self.__pontos), True, (0, 0, 0))
