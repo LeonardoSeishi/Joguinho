@@ -3,7 +3,7 @@ from objeto import Objeto
 
 
 class Jogador(Objeto):
-    def __init__(self, velocidade, x, y, imagem, largura, altura, aceleracao, img_vida):
+    def __init__(self, velocidade, x, y, imagem, largura, altura, aceleracao, img_vida, velocidade_pulo):
         super().__init__(velocidade, x, y, imagem, largura, altura, aceleracao)
         self.__vidas = 3
         self.__img_vida1 = img_vida
@@ -15,6 +15,7 @@ class Jogador(Objeto):
         self.__colisao = False
         self.__animacao = 0
         self.__tempo = 0
+        self.__velocidade_pulo = velocidade_pulo
 
 
     @property
@@ -89,7 +90,7 @@ class Jogador(Objeto):
  
     def pular(self):
         self.__pulando = True
-        self.velocidade = -10
+        self.velocidade = self.__velocidade_pulo
 
 
             
