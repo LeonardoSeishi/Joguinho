@@ -1,5 +1,5 @@
 import pygame
-
+#print(pygame.font.get_fonts())
 class Menu():
     def __init__(self,jogo):
         self.jogo = jogo 
@@ -7,16 +7,17 @@ class Menu():
         self.rodar_display = True
         self.cursor_rect = pygame.Rect(0,0,150,150)
         self.offset = - 100
+        self.imagem_menu = 'imagens/background/imagem_menu.jpg'
+        self.imgaux = pygame.image.load(self.imagem_menu).convert_alpha()
 
-    
     def mostrar_cursor(self):
-        self.jogo.desenha_texto('-', 20, self.cursor_rect.x, self.cursor_rect.y)
+        self.jogo.desenha_texto('>', 20, self.cursor_rect.x, self.cursor_rect.y)
 
 
     def blit_screen(self):
         #self.jogo.screen.blit(self.jogo.display, (0, 0))
         pygame.display.update()
-        self.jogo.screen.blit(self.jogo.display, (0, 0))
+        self.jogo.screen.blit(self.imgaux, (0, 0))
         self.jogo.reset_keys()
 
 
@@ -37,8 +38,7 @@ class MainMenu(Menu):
         while self.rodar_display:
             self.jogo.check_events()
             self.check_input()
-            self.jogo.display.fill(self.jogo.preto)
-            self.jogo.desenha_texto('Main Menu', 20, 600, 100)
+            #self.jogo.display.fill(self.jogo.preto)
             self.jogo.desenha_texto('Start Game', 20, self.iniciox, self.inicioy)
             self.jogo.desenha_texto('Pontuacao', 20, self.pontuacaox, self.pontuacaoy)
             self.jogo.desenha_texto('Sair', 20, self.sairx, self.sairy)
@@ -106,7 +106,7 @@ class MenuFim(Menu):
         while self.rodar_display:
             self.jogo.check_events()
             self.check_input()
-            self.jogo.display.fill((0,0,0))
+            #self.jogo.display.fill((0,0,0))
             self.jogo.desenha_texto('GAME OVER', 20, 600, 100)
             self.jogo.desenha_texto('Reiniciar', 20, self.reinx, self.reiny)
             self.jogo.desenha_texto('Sair', 20, self.saidax, self.saiday)
@@ -131,3 +131,6 @@ class MenuFim(Menu):
             if self.state == 'Reiniciar':
                 self.rodar_display = False
                 self.jogo.jogar()
+
+            if self.state == 'saida':
+                self.rodar_display = False

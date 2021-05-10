@@ -6,9 +6,9 @@ from os import path
 class Pontuacao():
     def __init__(self):
         self.__pontos = 0
-        self.__font = pygame.font.Font('freesansbold.ttf', 19)
-        self.__font_f = pygame.font.Font('freesansbold.ttf', 40)
-        self.__font_moeda = pygame.font.Font('freesansbold.ttf', 16)
+        self.__font = pygame.font.Font("imagens/fonte/PressStart2P-vav7.ttf", 12)
+        self.__font_f = pygame.font.Font("imagens/fonte/PressStart2P-vav7.ttf", 15)
+        self.__font_moeda = pygame.font.Font("imagens/fonte/PressStart2P-vav7.ttf", 10)
         self.__arquivo = 'highscore.txt'
 
     @property
@@ -35,7 +35,7 @@ class Pontuacao():
     def mostrar_moedas(self, screen, num_moedas):
         texto_f = self.__font_moeda.render('' + str(int(num_moedas/2)), True, (255,255,255))
         texto_f_rect = texto_f.get_rect()
-        texto_f_rect.center = (962,42) 
+        texto_f_rect.center = (961,41) 
         return screen.blit(texto_f,texto_f_rect)
 
     def pontuacao_final(self,pontos):

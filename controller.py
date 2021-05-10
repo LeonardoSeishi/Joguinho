@@ -66,7 +66,7 @@ moeda = Moeda(velocidade, 1000, 220, moeda_sheet, 48, 48, aceleracao)
 mini_moeda = Moeda(0, 970, 25, mini_moeda_sheet, 32, 32, 0)
 #passaro = Obstaculo(velocidade + 2, 800, --range(200,350), 96,96, aceleracao)
 
-font = pygame.font.Font('freesansbold.ttf', 50)
+font = pygame.font.Font("imagens/fonte/PressStart2P-vav7.ttf", 30)
 #font_lost = pygame.font.Font('freesansbold.ttf', 60)
 pontuacao = Pontuacao()
 branco = (255,255,255)
@@ -100,7 +100,7 @@ class Menu_Controller():
             #self.reset_keys()
 
     def desenha_texto(self,texto, tamanho, x, y):
-        superficie_texto = font.render(texto, True, branco)
+        superficie_texto = font.render(texto, True, (0,0,0))
         text_rect = superficie_texto.get_rect()
         text_rect.center = (x,y)
         self.screen.blit(superficie_texto,text_rect)
