@@ -50,6 +50,7 @@ mini_moeda_sprite = Spritesheet('imagens/itens/moeda_pequena.png')
 mini_moeda_sheet = [mini_moeda_sprite.parse_sprite('moeda_pequena0.png'),mini_moeda_sprite.parse_sprite('moeda_pequena1.png'),mini_moeda_sprite.parse_sprite('moeda_pequena2.png'),mini_moeda_sprite.parse_sprite('moeda_pequena3.png')]
 poderes = Spritesheet('imagens/itens/poderes.png')
 poderes_sheet = [poderes.parse_sprite('poderes0.png'),poderes.parse_sprite('poderes1.png')]
+moldura_sheet = [poderes.parse_sprite('poderes2.png'),poderes.parse_sprite('poderes3.png'),poderes.parse_sprite('poderes4.png'),poderes.parse_sprite('poderes5.png'),poderes.parse_sprite('poderes6.png'),poderes.parse_sprite('poderes7.png'),poderes.parse_sprite('poderes8.png'),poderes.parse_sprite('poderes9.png'),poderes.parse_sprite('poderes10.png'),poderes.parse_sprite('poderes11.png')]
 
 #velocidade geral
 velocidade = -9
@@ -57,7 +58,7 @@ velocidade_pulo = -17
 gravidade = 0.6
 aceleracao = -0.0002
 # intanciando classes
-dino = Jogador(0, 80, 320, dino_sheet, 128, 120, gravidade, img_vida,poderes_sheet[0], poderes_sheet[1], velocidade_pulo)
+dino = Jogador(0, 80, 320, dino_sheet, 128, 120, gravidade, img_vida, poderes_sheet, moldura_sheet, velocidade_pulo)
 cacto = Obstaculo(velocidade, 800, 350, cacto_sheet , 32, 96, aceleracao)
 mapa = Background_controller(layers,velocidade, aceleracao)
 moeda = Moeda(velocidade, 1000, 220, moeda_sheet, 48, 48, aceleracao)
@@ -116,8 +117,8 @@ class Menu_Controller():
                     self.inicia()
                 
                 if event.type == pygame.KEYDOWN: 
-                    if event.key == pygame.K_SPACE:
-                        if not dino.pulando and not dino.agachado: 
+                    if event.key == pygame.K_SPACE or event.key == pygame.K_UP:
+                        if (not dino.pulando and not dino.agachado) or dino.double_jump: 
                             dino.pular()
 
                     if event.key == pygame.K_DOWN:
@@ -125,7 +126,24 @@ class Menu_Controller():
                             dino.agachado = True
                             dino.altura = 76
                             dino.largura = 160
-                            
+
+                    if event.key == pygame.K_LEFT:
+                        if dino.num_moedas < 20:
+                            dino.set_moldura_escudo(moldura_sheet[0])  
+                        else:
+                            if not dino.escudo:
+                                dino.num_moedas -= 20
+                            dino.escudo = True
+                    
+                    if event.key == pygame.K_RIGHT:
+                        if dino.num_moedas < 10:
+                            dino.set_moldura_double_jump(moldura_sheet[0])
+                        else:
+                            if not dino.double_jump:
+                                dino.num_moedas -= -10
+                            dino.double_jump = True
+                                                 
+                                                
                 if event.type == pygame.KEYUP:
                     
                     if event.key == pygame.K_DOWN:
@@ -133,6 +151,12 @@ class Menu_Controller():
                         dino.agachado = False
                         dino.altura = 120
                         dino.largura = 128
+                    
+                    if event.key == pygame.K_LEFT:
+                        dino.set_moldura_escudo(moldura_sheet[1])
+
+                    if event.key == pygame.K_RIGHT:
+                        dino.set_moldura_double_jump(moldura_sheet[1])
 
                        
             if cacto.cordenadas[0] < -50:
@@ -141,16 +165,21 @@ class Menu_Controller():
             # colisao
             if dino.objRect.colliderect(cacto.objRect) and not dino.colisao:
                 dino.colisao = True
-                if dino.vidas == 3:
-                    dino.set_img_vida3(img_notvida)
-                elif dino.vidas == 2:
-                    dino.set_img_vida2(img_notvida)
-                elif dino.vidas == 1:
-                    dino.set_img_vida1(img_notvida)
-                dino.vidas = dino.vidas - 1
+                if not dino.escudo:
+                    if dino.vidas == 3:
+                        dino.set_img_vida3(img_notvida)
+                    elif dino.vidas == 2:
+                        dino.set_img_vida2(img_notvida)
+                    elif dino.vidas == 1:
+                        dino.set_img_vida1(img_notvida)
+                    dino.vidas = dino.vidas - 1
+                else:
+                    dino.escudo = False
+                
 
             if dino.objRect.colliderect(moeda.objRect):
                 moeda.colisao = True
+                dino.num_moedas += 1
                 pontuacao.pontos = 75
 
             # game over

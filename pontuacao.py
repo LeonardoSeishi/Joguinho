@@ -3,8 +3,6 @@ import pygame
 from os import path
 
 
-
-
 class Pontuacao():
     def __init__(self):
         self.__pontos = 0
@@ -32,6 +30,12 @@ class Pontuacao():
         texto_f_rect = texto_f.get_rect()
         texto_f_rect.center = (550, 250)
         return screen.blit(texto_f,texto_f_rect)
+
+    #def mostrar_moedas(self, screen, num_moedas):
+        #texto_f = self.__font_f.render('Pontuação final: ' + str(num_moedas), True, (0,0,0))
+        #texto_f_rect = texto_f.get_rect()
+        #texto_f_rect.center = () --#colocar cordenada
+        #return screen.blit(texto_f,texto_f_rect)
 
     def pontuacao_final(self,pontos):
         with open(path.join(dir,self.__arquivo), 'w') as f:

@@ -1,26 +1,31 @@
 import pygame
 from objeto import Objeto
 
-
 class Jogador(Objeto):
-    def __init__(self, velocidade, x, y, imagem, largura, altura, aceleracao, img_vida, img_escudo, img_dj, velocidade_pulo):
+    def __init__(self,velocidade , x, y, imagem: list, largura, altura, aceleracao, img_vida, img_poderes: list,img_moldura: list, velocidade_pulo):
         super().__init__(velocidade, x, y, imagem, largura, altura, aceleracao)
         self.__vidas = 3
         self.__img_vida1 = img_vida
         self.__img_vida2 = img_vida
         self.__img_vida3 = img_vida
-        self.__img_escudo = img_escudo
-        self.__img_dj = img_dj
-        self.__aceleracao = aceleracao
+        self.__img_escudo = img_poderes[0]
+        self.__img_double_jump = img_poderes[1]
+        self.__moldura = img_moldura
+        self.__moldura_escudo = img_moldura[1]
+        self.__moldura_double_jump = img_moldura[1]
         self.__pulando = False
         self.__agachado = False
         self.__colisao = False
         self.__escudo = False
         self.__double_jump = False
-        self.__animacao = 0
-        self.__tempo = 0
+        self.__num_moedas = 0
+        self.__anim_dino = 0
+        self.__framerate_dino = 0
+        self.__anim_moldura1 = 3
+        self.__framerate_moldura1 = 0
+        self.__anim_moldura2 = 3
+        self.__framerate_moldura2 = 0
         self.__velocidade_pulo = velocidade_pulo
-
 
     @property
     def vidas(self):
@@ -46,6 +51,10 @@ class Jogador(Objeto):
     def double_jump(self):
         return self.__double_jump
 
+    @property
+    def num_moedas(self):
+        return self.__num_moedas
+
     @vidas.setter
     def vidas(self, vidas):
         self.__vidas = vidas
@@ -70,8 +79,18 @@ class Jogador(Objeto):
     def double_jump(self, boolean):
         self.__double_jump = boolean
 
-    def set_img_vida1(self, img):
-        self.__img_vida1 = img
+    @num_moedas.setter
+    def num_moedas(self, valor):
+        self.__num_moedas = valor
+
+    def set_img_escudo(self, imagem):
+        self.__img_escudo = imagem
+
+    def set_double_jump(self, imagem):
+        self.__img_double_jump = imagem
+
+    def set_img_vida1(self, imagem):
+        self.__img_vida1 = imagem
 
     def set_img_vida2(self, imagem):
         self.__img_vida2 = imagem
@@ -79,24 +98,32 @@ class Jogador(Objeto):
     def set_img_vida3(self, imagem):
         self.__img_vida3 = imagem
 
+    def set_moldura_escudo(self, imagem):
+        self.__moldura_escudo = imagem
+
+    def set_moldura_double_jump(self, imagem):
+        self.__moldura_double_jump = imagem
+
     def desenha(self, screen):
-        self.__tempo += 1
-        if self.__tempo == 8:
-            self.__tempo = 0
-            self.__animacao = (self.__animacao + 1) % len(self.imagem)
-        screen.blit(self.imagem[self.__animacao], (self.cordenadas))
+        self.__framerate_dino += 1
+        if self.__framerate_dino == 8:
+            self.__framerate_dino = 0
+            self.__anim_dino = (self.__anim_dino + 1) % len(self.imagem)
+        screen.blit(self.imagem[self.__anim_dino], (self.cordenadas))
         screen.blit(self.__img_vida1, (0, 0))
         screen.blit(self.__img_vida2, (52, 0))
         screen.blit(self.__img_vida3, (104, 0))
         screen.blit(self.__img_escudo,(400,1))
-        screen.blit(self.__img_dj,(480,1))
-
+        screen.blit(self.__moldura_escudo,(400,1))
+        screen.blit(self.__img_double_jump,(480,1))
+        screen.blit(self.__moldura_double_jump,(480,1))
+        
     def atualizar(self):
         self.cordenadas[1] += self.velocidade
         self.objRect = pygame.Rect(self.cordenadas[0], self.cordenadas[1], self.largura, self.altura)
 
         if self.__pulando:
-            self.velocidade = self.velocidade + self.__aceleracao
+            self.velocidade = self.velocidade + self.aceleracao
 
         if self.cordenadas[1] + self.altura > 440:
             self.__pulando = False
@@ -105,11 +132,40 @@ class Jogador(Objeto):
 
         if self.__agachado:
             if self.__pulando:
-                self.cordenadas[1] += 50
+                self.cordenadas[1] += 30
             else:
                 self.cordenadas[1] = 364
 
- 
+        if not self.__escudo:
+            self.__framerate_moldura1 = 0
+            self.__anim_moldura1 = 3
+        else:
+            self.__framerate_moldura1 += 1
+            self.__moldura_escudo = self.__moldura[self.__anim_moldura1]
+            if self.__framerate_moldura1 == 60:   
+                if self.__anim_moldura1 == 9:
+                    self.__escudo = False
+                    self.__moldura_escudo = self.__moldura[1]
+                    self.__anim_moldura1 = 3
+                self.__framerate_moldura1 = 0
+                self.__anim_moldura1 += 1
+        
+        if not self.__double_jump:
+            self.__framerate_moldura2 = 0
+            self.__anim_moldura2 = 3
+        else:
+            self.__framerate_moldura2 += 1
+            self.__moldura_double_jump = self.__moldura[self.__anim_moldura2]
+            if self.__framerate_moldura2 == 90:
+                print(self.__anim_moldura2)   
+                if self.__anim_moldura2 == 9:
+                    self.__double_jump = False
+                    self.__moldura_double_jump = self.__moldura[1]
+                    self.__anim_moldura2 = 3
+                self.__framerate_moldura2 = 0
+                self.__anim_moldura2 += 1
+
+
     def pular(self):
         self.__pulando = True
         self.velocidade = self.__velocidade_pulo
