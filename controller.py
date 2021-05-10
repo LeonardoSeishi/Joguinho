@@ -10,7 +10,7 @@ from fundo import Background
 from mapa import Background_controller
 from moeda import Moeda
 from spritesheet import Spritesheet
-
+from menu import *
 
 # iniciando pygame
 pygame.init()
@@ -64,10 +64,11 @@ mapa = Background_controller(layers,velocidade, aceleracao)
 moeda = Moeda(velocidade, 1000, 220, moeda_sheet, 48, 48, aceleracao)
 mini_moeda = Moeda(0, 970, 25, mini_moeda_sheet, 32, 32, 0)
 #passaro = Obstaculo(velocidade + 2, 800, --range(200,350), 96,96, aceleracao)
-#font = pygame.font.Font('freesansbold.ttf', 20)
+font = pygame.font.Font('freesansbold.ttf', 50)
 #font_lost = pygame.font.Font('freesansbold.ttf', 60)
 pontuacao = Pontuacao()
-
+branco = (255,255,255)
+preto = (0,0,0)
 #FPS
 clock = pygame.time.Clock()
 fps = 60
@@ -76,56 +77,56 @@ allObjects = [dino, cacto, moeda, mini_moeda]
 
 class Menu_Controller():
     def __init__(self):
-        self.__tela_inicial = Menu()
-        self.__rodando = True
-        self.__jogando = False
+        self.display = pygame.Surface((1200,500))
+        self.UP_KEY = False
+        self.DOWN_KEY = False
+        self.START_KEY = False
+        self.BACK_KEY = False
+        self.rodando = True     
+        self.jogando = False
+        self.screen = pygame.display.set_mode((1200,500))
+        self.preto = (0,0,0)
+        self.main_menu = MainMenu(self)
+        self.final_menu = MenuFim(self)
+        self.curr_menu = self.main_menu
 
-    def inicia(self):
-        self.__tela_inicial.tela_consulta()
+        if self.rodando:
+            self.curr_menu.display_menu()
+            pygame.display.update()
 
-        while self.__rodando:
-            event, values = self.__tela_inicial.le_eventos()
+    def desenha_texto(self,texto, tamanho, x, y):
+        superficie_texto = font.render(texto, True, branco)
+        text_rect = superficie_texto.get_rect()
+        text_rect.center = (x,y)
+        self.screen.blit(superficie_texto,text_rect)
 
-            if event == sg.WIN_CLOSED:
-                self.__rodando = False
+    def check_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.jogando = False
+                self.curr_menu.rodar_display = False
+                self.rodando = False
 
-            elif event == 'INICIAR JOGO':
-                self.__rodando = False
-                self.__jogando = True
-                self.__tela_inicial.fim()
-                self.jogar()
-
-            elif event == 'DIFICULDADE':
-                # abrir interface de dificuldades
-                print("'-'")
-
-            elif event == 'VER PONTUACAO':
-                # abrir interface de pontuação
-                print("'-'")
-                
-            elif event == 'SAIR':
-                self.__rodando = False
-
-        self.__tela_inicial.fim()
- 
-    def jogar(self):
-        while self.__jogando:
-            
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.__jogando = False
-                    self.inicia()
-                
-                if event.type == pygame.KEYDOWN: 
+            if event.type == pygame.KEYDOWN: 
                     if event.key == pygame.K_SPACE or event.key == pygame.K_UP:
                         if (not dino.pulando and not dino.agachado) or dino.double_jump: 
                             dino.pular()
 
+                    if event.key == pygame.K_RETURN:
+                        self.START_KEY = True
+
+                    if event.key == pygame.K_BACKSPACE:
+                        self.BACK_KEY = True
+
+                    if event.key == pygame.K_UP:
+                        self.UP_KEY = True
+
                     if event.key == pygame.K_DOWN:
-                            dino.imagem = dinoag_sheet
-                            dino.agachado = True
-                            dino.altura = 76
-                            dino.largura = 160
+                        self.DOWN_KEY = True
+                        dino.imagem = dinoag_sheet
+                        dino.agachado = True
+                        dino.altura = 76
+                        dino.largura = 160
 
                     if event.key == pygame.K_LEFT:
                         if dino.num_moedas < 20:
@@ -140,25 +141,33 @@ class Menu_Controller():
                             dino.set_moldura_double_jump(moldura_sheet[0])
                         else:
                             if not dino.double_jump:
-                                dino.num_moedas -= -10
+                                dino.num_moedas -= 10
                             dino.double_jump = True
                                                  
                                                 
-                if event.type == pygame.KEYUP:
+            if event.type == pygame.KEYUP:
                     
-                    if event.key == pygame.K_DOWN:
-                        dino.imagem = dino_sheet
-                        dino.agachado = False
-                        dino.altura = 120
-                        dino.largura = 128
+                if event.key == pygame.K_DOWN:
+                    dino.imagem = dino_sheet
+                    dino.agachado = False
+                    dino.altura = 120
+                    dino.largura = 128
                     
-                    if event.key == pygame.K_LEFT:
-                        dino.set_moldura_escudo(moldura_sheet[1])
+                if event.key == pygame.K_LEFT:
+                    dino.set_moldura_escudo(moldura_sheet[1])
 
-                    if event.key == pygame.K_RIGHT:
-                        dino.set_moldura_double_jump(moldura_sheet[1])
+                if event.key == pygame.K_RIGHT:
+                    dino.set_moldura_double_jump(moldura_sheet[1])
 
-                       
+
+    def reset_keys(self):
+        self.UP_KEY , self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False , False 
+
+    def jogar(self):
+        self.jogando = True
+        while self.jogando:
+            self.check_events()
+            
             if cacto.cordenadas[0] < -50:
                 dino.colisao = False
 
@@ -186,7 +195,7 @@ class Menu_Controller():
             # game over
             if dino.vidas == 0:
                 self.__jogando = False
-                self.inicia()
+                #self.inicia()
 
             # atualizar e desenhar
             mapa.loop(screen)
@@ -194,11 +203,11 @@ class Menu_Controller():
                 objeto.atualizar()
                 objeto.desenha(screen)
             pontuacao.contagem(screen)
-
+            pontuacao.mostrar_moedas(screen,dino.num_moedas)
 
             pygame.display.update()
             clock.tick(fps)
 
 
 jogo = Menu_Controller()
-jogo.inicia()
+
