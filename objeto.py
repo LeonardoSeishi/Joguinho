@@ -1,7 +1,5 @@
 from abc import ABC, abstractmethod
 import pygame
-aux = 0
-
 
 class Objeto():
 
@@ -12,7 +10,7 @@ class Objeto():
         self.__imagem = imagem
         self.__velocidade = velocidade
         self.__aceleracao = aceleracao
-        self.__objRect = self.__imagem[aux].get_rect()
+        self.__objRect = self.__imagem[0].get_rect()
         self.objRect.x = x
         self.objRect.y = y
 
@@ -73,7 +71,7 @@ class Objeto():
         self.__objRect = obj
 
     def desenha(self, screen):
-        screen.blit(self.imagem[aux], self.objRect)
+        screen.blit(self.imagem[0], self.objRect)
 
     def atualizar(self):
         self.__velocidade += self.__aceleracao

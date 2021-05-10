@@ -21,9 +21,9 @@ class Jogador(Objeto):
         self.__num_moedas = 0
         self.__anim_dino = 0
         self.__framerate_dino = 0
-        self.__anim_moldura1 = 3
+        self.__anim_moldura1 = 2
         self.__framerate_moldura1 = 0
-        self.__anim_moldura2 = 3
+        self.__anim_moldura2 = 2
         self.__framerate_moldura2 = 0
         self.__velocidade_pulo = velocidade_pulo
 
@@ -138,7 +138,7 @@ class Jogador(Objeto):
 
         if not self.__escudo:
             self.__framerate_moldura1 = 0
-            self.__anim_moldura1 = 3
+            self.__anim_moldura1 = 2
         else:
             self.__framerate_moldura1 += 1
             self.__moldura_escudo = self.__moldura[self.__anim_moldura1]
@@ -146,22 +146,21 @@ class Jogador(Objeto):
                 if self.__anim_moldura1 == 9:
                     self.__escudo = False
                     self.__moldura_escudo = self.__moldura[1]
-                    self.__anim_moldura1 = 3
+                    self.__anim_moldura1 = 2
                 self.__framerate_moldura1 = 0
                 self.__anim_moldura1 += 1
         
         if not self.__double_jump:
             self.__framerate_moldura2 = 0
-            self.__anim_moldura2 = 3
+            self.__anim_moldura2 = 2
         else:
             self.__framerate_moldura2 += 1
             self.__moldura_double_jump = self.__moldura[self.__anim_moldura2]
-            if self.__framerate_moldura2 == 90:
-                print(self.__anim_moldura2)   
+            if self.__framerate_moldura2 == 75: 
                 if self.__anim_moldura2 == 9:
                     self.__double_jump = False
                     self.__moldura_double_jump = self.__moldura[1]
-                    self.__anim_moldura2 = 3
+                    self.__anim_moldura2 = 2
                 self.__framerate_moldura2 = 0
                 self.__anim_moldura2 += 1
 

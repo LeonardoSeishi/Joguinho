@@ -175,6 +175,7 @@ class Menu_Controller():
                     dino.vidas = dino.vidas - 1
                 else:
                     dino.escudo = False
+                    dino.set_moldura_escudo(moldura_sheet[1])
                 
 
             if dino.objRect.colliderect(moeda.objRect):
