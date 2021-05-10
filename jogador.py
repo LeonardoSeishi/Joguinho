@@ -169,5 +169,4 @@ class Jogador(Objeto):
         self.__pulando = True
         self.velocidade = self.__velocidade_pulo
 
-
             

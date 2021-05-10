@@ -33,6 +33,7 @@ class MainMenu(Menu):
 
     def display_menu(self):
         self.rodar_display = True
+        self.START_KEY = False
         while self.rodar_display:
             self.jogo.check_events()
             self.check_input()
@@ -45,7 +46,7 @@ class MainMenu(Menu):
             self.blit_screen() 
             
     def move_cursor(self):
-        print(self.state)
+        #print(self.state)
         if self.jogo.DOWN_KEY:
 
             if self.state == 'Inicio':
