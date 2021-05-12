@@ -1,7 +1,7 @@
 from pygame.rect import Rect
 import pygame
 from os import path
-
+import json
 
 class Pontuacao():
     def __init__(self):
@@ -10,6 +10,7 @@ class Pontuacao():
         self.__font_f = pygame.font.Font("imagens/fonte/PressStart2P-vav7.ttf", 15)
         self.__font_moeda = pygame.font.Font("imagens/fonte/PressStart2P-vav7.ttf", 10)
         self.__arquivo = 'highscore.txt'
+        self.__data = {}
         
     @property
     def pontos(self):
@@ -18,6 +19,10 @@ class Pontuacao():
     @pontos.setter
     def pontos(self, valor):
         self.__pontos += valor
+
+    @property
+    def data(self):
+        return self.__data
 
     def contagem(self, screen):
         self.__pontos += 1
@@ -39,18 +44,44 @@ class Pontuacao():
         return screen.blit(texto_f,texto_f_rect)
 
     def pontuacao_final(self,pontos):
-        with open(path.join(dir,self.__arquivo), 'w') as f:
-            try:
-                highscore = int(f.read())
-            except:
-                highscore = 0
+        with open(self.__arquivo) as score_file:
+            self.__data = json.load(score_file)
+        print(self.__data)
+        #print(pontos)
+        for i in self.__data:
+            
+            if pontos > (self.__data[i]):
+                if i == '1':
+                    self.__data['5'] = self.__data['4']
+                    self.__data['4'] = self.__data['3']
+                    self.__data['3'] = self.__data['2']
+                    self.__data['2'] = self.__data['1']
+                    self.__data['1'] = pontos
+                    break
 
-        if pontos > highscore:
-            highscore = pontos
-            dir = path.dirname(__dirname__)
-            with open(path.join(dir,self.__arquivo), 'w') as f:
-                try:
-                    highscore = int(f.read())
-                except:
-                    highscore = 0
+                if i == '2':
+                    self.__data['5'] = self.__data['4']
+                    self.__data['4'] = self.__data['3']
+                    self.__data['3'] = self.__data['2']
+                    self.__data['2'] = pontos
+                    break
+                if i == '3':
+                    self.__data['5'] = self.__data['4']
+                    self.__data['4'] = self.__data['3']
+                    self.__data['3'] = pontos
+                    break
+                if i =='4':
+                    self.__data['5'] = self.__data['4']
+                    self.__data['4'] = pontos
+                    break
+                if i==5:
+                    self.__data['5'] = pontos
+                    break
+                    
 
+        score_file.close()            
+        print(self.__data)            
+        with open (self.__arquivo,'w') as score_file:
+            json.dump(self.__data, score_file)
+
+        score_file.close()

@@ -68,7 +68,7 @@ mini_moeda = Moeda(0, 970, 25, mini_moeda_sheet, 32, 32, 0)
 
 font = pygame.font.Font("imagens/fonte/PressStart2P-vav7.ttf", 30)
 #font_lost = pygame.font.Font('freesansbold.ttf', 60)
-pontuacao = Pontuacao()
+#pontuacao = Pontuacao()
 branco = (255,255,255)
 preto = (0,0,0)
 #FPS
@@ -80,6 +80,7 @@ allObjects = [dino, cacto, moeda, mini_moeda]
 class Menu_Controller():
     def __init__(self):
         pygame.init()
+        self.pontuacao = Pontuacao()
         self.display = pygame.Surface((1200,500))
         self.UP_KEY = False
         self.DOWN_KEY = False
@@ -89,16 +90,22 @@ class Menu_Controller():
         self.jogando = False
         self.screen = screen
         self.preto = preto
+        self.menu_pontuacao = MenuPontuacao(self)
         self.main_menu = MainMenu(self)
         self.final_menu = MenuFim(self)
         self.curr_menu = self.main_menu
 
-        if self.rodando:
 
+        while self.rodando:
             self.curr_menu.display_menu()
-            self.reset_keys()
-            pygame.display.update()
-            #self.reset_keys()
+
+
+
+    def set_curr_menu(self,menu):
+        self.curr_menu = menu
+
+
+    
 
     def desenha_texto(self,texto, tamanho, x, y):
         superficie_texto = font.render(texto, True, (0,0,0))
@@ -184,6 +191,7 @@ class Menu_Controller():
     def game_over(self):
         self.curr_menu = self.final_menu 
         self.jogando = False
+        self.pontuacao.pontuacao_final(self.pontuacao.pontos)
         #self.rodando = True
         #dino = Jogador(0, 80, 320, dino_sheet, 128, 120, gravidade, img_vida, poderes_sheet, moldura_sheet, velocidade_pulo)
         #cacto = Obstaculo(velocidade, 800, 350, cacto_sheet , 32, 96, aceleracao)
@@ -225,7 +233,7 @@ class Menu_Controller():
             if dino.objRect.colliderect(moeda.objRect):
                 moeda.colisao = True
                 dino.num_moedas += 1
-                pontuacao.pontos = 75
+                self.pontuacao.pontos = 75
 
             
             # game over
@@ -241,8 +249,8 @@ class Menu_Controller():
             for objeto in allObjects:
                 objeto.atualizar()
                 objeto.desenha(screen)
-            pontuacao.contagem(screen)
-            pontuacao.mostrar_moedas(screen,dino.num_moedas)
+            self.pontuacao.contagem(screen)
+            self.pontuacao.mostrar_moedas(screen,dino.num_moedas)
 
             pygame.display.update()
 
