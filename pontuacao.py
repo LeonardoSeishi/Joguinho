@@ -10,7 +10,7 @@ class Pontuacao():
         self.__font_f = pygame.font.Font("imagens/fonte/PressStart2P-vav7.ttf", 15)
         self.__font_moeda = pygame.font.Font("imagens/fonte/PressStart2P-vav7.ttf", 10)
         self.__arquivo = 'highscore.txt'
-
+        
     @property
     def pontos(self):
         return self.__pontos

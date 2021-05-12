@@ -94,6 +94,7 @@ class Menu_Controller():
         self.curr_menu = self.main_menu
 
         if self.rodando:
+
             self.curr_menu.display_menu()
             self.reset_keys()
             pygame.display.update()
@@ -181,17 +182,20 @@ class Menu_Controller():
 
 
     def game_over(self):
+        self.curr_menu = self.final_menu 
         self.jogando = False
-        dino = Jogador(0, 80, 320, dino_sheet, 128, 120, gravidade, img_vida, poderes_sheet, moldura_sheet, velocidade_pulo)
-        cacto = Obstaculo(velocidade, 800, 350, cacto_sheet , 32, 96, aceleracao)
-        mapa = Background_controller(layers,velocidade, aceleracao)
-        moeda = Moeda(velocidade, 1000, 220, moeda_sheet, 48, 48, aceleracao)
-        mini_moeda = Moeda(0, 970, 25, mini_moeda_sheet, 32, 32, 0)
+        #self.rodando = True
+        #dino = Jogador(0, 80, 320, dino_sheet, 128, 120, gravidade, img_vida, poderes_sheet, moldura_sheet, velocidade_pulo)
+        #cacto = Obstaculo(velocidade, 800, 350, cacto_sheet , 32, 96, aceleracao)
+        #mapa = Background_controller(layers,velocidade, aceleracao)
+        #moeda = Moeda(velocidade, 1000, 220, moeda_sheet, 48, 48, aceleracao)
+        #mini_moeda = Moeda(0, 970, 25, mini_moeda_sheet, 32, 32, 0)
         #passaro = Obstaculo(velocidade + 2, 800, --range(200,350), 96,96, aceleracao)
-        pontuacao.pontos = 0
-        self.curr_menu = self.final_menu        
-        self.reset_keys()
+        #pontuacao.pontos = 0
+        #self.curr_menu = self.final_menu        
         self.curr_menu.display_menu()
+        #self.reset_keys()
+        #pygame.display.update()
         
     def jogar(self):
         self.jogando = True
@@ -225,8 +229,8 @@ class Menu_Controller():
 
             
             # game over
-            if dino.vidas == 0:
-                self.game_over()
+            #if dino.vidas == 0:
+                #self.game_over()
                 
                 
                 
@@ -241,10 +245,15 @@ class Menu_Controller():
             pontuacao.mostrar_moedas(screen,dino.num_moedas)
 
             pygame.display.update()
+
+            # game over
+            if dino.vidas == 0:
+                self.jogando = False
+                self.game_over()
+
             clock.tick(fps)
 
-        else:
-            self.rodando = True
+        
 
 jogo = Menu_Controller()
 
