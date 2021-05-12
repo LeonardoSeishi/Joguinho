@@ -73,7 +73,7 @@ class Pontuacao():
                     self.__data['5'] = self.__data['4']
                     self.__data['4'] = pontos
                     break
-                if i==5:
+                if i=='5':
                     self.__data['5'] = pontos
                     break
                     
