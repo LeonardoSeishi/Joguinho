@@ -46,7 +46,6 @@ class Pontuacao():
     def pontuacao_final(self,pontos):
         with open(self.__arquivo) as score_file:
             self.__data = json.load(score_file)
-        print(self.__data)
         #print(pontos)
         for i in self.__data:
             
@@ -78,7 +77,7 @@ class Pontuacao():
                     self.__data['5'] = pontos
                     break
                     
-
+        
         score_file.close()            
         print(self.__data)            
         with open (self.__arquivo,'w') as score_file:

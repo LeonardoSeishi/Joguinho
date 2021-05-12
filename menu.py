@@ -11,6 +11,7 @@ class Menu():
         self.screen = self.jogo.screen
         self.imagem_menu = 'imagens/background/imagem_menu.jpg'
         self.imgaux = pygame.image.load(self.imagem_menu).convert_alpha()
+
     def mostrar_cursor(self):
         self.jogo.desenha_texto('>', 20, self.cursor_rect.x, self.cursor_rect.y)
         
@@ -35,7 +36,7 @@ class MainMenu(Menu):
         
 
     def display_menu(self):
-        self.rodar_display = True
+        #self.rodar_display = True
         self.START_KEY = False
         while self.rodar_display:
             self.jogo.check_events()
@@ -85,10 +86,10 @@ class MainMenu(Menu):
         if self.jogo.START_KEY:
             if self.state == 'Inicio':
                 self.jogo.jogar()
-
+                self.rodar_display = False
             elif self.state == 'Pontuacao':
-                self.jogo.set_curr_menu( self.jogo.menu_pontuacao) 
-
+                self.jogo.men_pontuacao()
+                self.rodar_display = False
             elif self.state == 'Sair':
                 self.rodar_display = False
 
@@ -100,23 +101,31 @@ class MenuPontuacao(Menu):
         self.arquivo = 'highscore.txt'
         self.data = {}
         self.state = 'Sair'
-        self.sairx, self.sairy = self.meia_w, self.meia_h + 100
+        self.sairx, self.sairy = self.meia_w, self.meia_h + 200
         self.cursor_rect.midtop = (self.sairx + self.offset, self.sairy)
-        with open(self.arquivo) as score_file:
+        with open(self.arquivo,'r') as score_file:
             self.data = json.load(score_file)
-        self.string = (f'1 - {self.data["1"]} \n 2 - {self.data["2"]}\n 3 - {self.data["3"]}\n 4 - {self.data["4"]}\n5 - {self.data["5"]}\n')
+        self.string1 = (f'1 - {self.data["1"]}') 
+        self.string2 = (f'2 - {self.data["2"]}')
+        self.string3 = (f'3 - {self.data["3"]}')
+        self.string4 = (f'4 - {self.data["4"]}')
+        self.string5 = (f'5 - {self.data["5"]}')
         score_file.close()
 
     def display_menu(self):   
-        self.rodar_display = True
+        #self.rodar_display = True
         self.START_KEY = False
         while self.rodar_display:
             self.jogo.check_events()
             self.check_input()
             #self.jogo.display.fill((0,0,0))
             self.jogo.desenha_texto('SCORE BOARD', 20, 600, 100)
-            self.jogo.desenha_texto(self.string, 10 , 600, 250)
-            self.jogo.desenha_texto('Sair', 20, self.saidax, self.saiday)
+            self.jogo.desenha_texto(self.string1, 10 , 600, 150)
+            self.jogo.desenha_texto(self.string2, 10 , 600, 200)
+            self.jogo.desenha_texto(self.string3, 10 , 600, 250)
+            self.jogo.desenha_texto(self.string4, 10 , 600, 300)
+            self.jogo.desenha_texto(self.string5, 10 , 600, 350)
+            self.jogo.desenha_texto('Sair', 20, self.sairx, self.sairy)
             self.mostrar_cursor()  
             self.blit_screen(self.imgaux) 
 
@@ -136,7 +145,9 @@ class MenuPontuacao(Menu):
         self.move_cursor()
         if self.jogo.START_KEY:
             if self.state == 'Sair':
-                self.jogo.curr_menu = self.jogo.main_menu
+                self.jogo.menu_inic()
+                self.rodar_display = False
+                
                 
 
 class MenuFim(Menu):
@@ -155,7 +166,7 @@ class MenuFim(Menu):
 
 
     def display_menu(self):
-        self.rodar_display = True
+        #self.rodar_display = True
         self.START_KEY = False
         while self.rodar_display:
             self.jogo.check_events()
@@ -173,6 +184,7 @@ class MenuFim(Menu):
         #print(self.state)
         #print(self.cursor_rect.x)
         #print(self.cursor_rect.y)
+        
         if self.jogo.UP_KEY or self.jogo.DOWN_KEY:
 
             if self.state == 'Reiniciar':
@@ -190,4 +202,5 @@ class MenuFim(Menu):
                 self.jogo.jogar()
 
             if self.state == 'saida':
+                self.jogo.menu_inic()
                 self.rodar_display = False

@@ -94,15 +94,29 @@ class Menu_Controller():
         self.main_menu = MainMenu(self)
         self.final_menu = MenuFim(self)
         self.curr_menu = self.main_menu
+        self.curr_menu.rodar_display = True
+
+        #Swhile self.rodando:
+            #self.curr_menu.display_menu()
 
 
-        while self.rodando:
-            self.curr_menu.display_menu()
+
+    #def menu_pont(self):
+        #self.curr_menu = self.menu_pontuacao
+        #self.curr_menu.display_menu()
+        #print('aaa')
+
+
+        #while self.rodando:
+            #self.curr_menu.display_menu()
 
 
 
-    def set_curr_menu(self,menu):
-        self.curr_menu = menu
+
+    #def menu_inic(self):
+        #self.curr_menu = self.main_menu
+        #self.curr_menu.display_menu()
+
 
 
     
@@ -189,10 +203,11 @@ class Menu_Controller():
 
 
     def game_over(self):
+        self.pontuacao.pontuacao_final(self.pontuacao.pontos)
+        self.menu_pontuacao = MenuPontuacao(self)
         self.curr_menu = self.final_menu 
         self.jogando = False
-        self.pontuacao.pontuacao_final(self.pontuacao.pontos)
-        #self.rodando = True
+        self.rodando = True
         #dino = Jogador(0, 80, 320, dino_sheet, 128, 120, gravidade, img_vida, poderes_sheet, moldura_sheet, velocidade_pulo)
         #cacto = Obstaculo(velocidade, 800, 350, cacto_sheet , 32, 96, aceleracao)
         #mapa = Background_controller(layers,velocidade, aceleracao)
@@ -201,9 +216,19 @@ class Menu_Controller():
         #passaro = Obstaculo(velocidade + 2, 800, --range(200,350), 96,96, aceleracao)
         #pontuacao.pontos = 0
         #self.curr_menu = self.final_menu        
-        self.curr_menu.display_menu()
+        self.curr_menu.rodar_display = True
         #self.reset_keys()
         #pygame.display.update()
+    
+    def men_pontuacao(self):
+        self.curr_menu = self.menu_pontuacao
+        pygame.display.update()
+        self.curr_menu.rodar_display = True
+
+    def menu_inic(self):
+        self.curr_menu = self.main_menu
+        pygame.display.update()
+        self.curr_menu.rodar_display = True
         
     def jogar(self):
         self.jogando = True
@@ -263,5 +288,5 @@ class Menu_Controller():
 
         
 
-jogo = Menu_Controller()
+#jogo = Menu_Controller()
 
