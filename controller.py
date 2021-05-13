@@ -11,6 +11,7 @@ from mapa import Background_controller
 from moeda import Moeda
 from spritesheet import Spritesheet
 from menu import *
+from gerador import Gerador
 
 # iniciando pygame
 pygame.init()
@@ -75,7 +76,8 @@ preto = (0,0,0)
 clock = pygame.time.Clock()
 fps = 60
 
-allObjects = [dino, cacto, moeda, mini_moeda]
+allObjects = [dino, cacto, moeda]
+
 
 class Menu_Controller():
     def __init__(self):
@@ -95,6 +97,10 @@ class Menu_Controller():
         self.final_menu = MenuFim(self)
         self.curr_menu = self.main_menu
         self.curr_menu.rodar_display = True
+        self.gerador = Gerador(screen, entidades=[(Obstaculo, (velocidade, 2000, 350, cacto_sheet, 32, 96, aceleracao)),
+                                                  (Moeda, (velocidade, 1500, 220, moeda_sheet, 48, 48, aceleracao))])
+        self.new_objects = []
+        self.timer_colisao = 0
 
         #Swhile self.rodando:
             #self.curr_menu.display_menu()
@@ -235,49 +241,60 @@ class Menu_Controller():
         self.rodando = False
         while self.jogando:
             self.check_events()
-            
-            if cacto.cordenadas[0] < -50:
+
+            if dino.colisao:
+                self.timer_colisao += 1
+            if self.timer_colisao > 100:
                 dino.colisao = False
+                self.timer_colisao = 0
 
             # colisao
-            if dino.objRect.colliderect(cacto.objRect) and not dino.colisao:
-                dino.colisao = True
-                if not dino.escudo:
-                    if dino.vidas == 3:
-                        dino.set_img_vida3(img_notvida)
-                    elif dino.vidas == 2:
-                        dino.set_img_vida2(img_notvida)
-                    elif dino.vidas == 1:
-                        dino.set_img_vida1(img_notvida)
-                    dino.vidas = dino.vidas - 1
-                else:
-                    dino.escudo = False
-                    dino.set_moldura_escudo(moldura_sheet[1])
-                
+            for objeto in allObjects:
+                if dino.objRect.colliderect(objeto.objRect):
+                    if isinstance(objeto, Obstaculo) and not dino.colisao:
+                        dino.colisao = True
+                        if not dino.escudo:
+                            if dino.vidas == 3:
+                                dino.set_img_vida3(img_notvida)
+                            elif dino.vidas == 2:
+                                dino.set_img_vida2(img_notvida)
+                            elif dino.vidas == 1:
+                                dino.set_img_vida1(img_notvida)
+                            dino.vidas = dino.vidas - 1
+                        else:
+                            dino.escudo = False
+                            dino.set_moldura_escudo(moldura_sheet[1])
+                    elif isinstance(objeto, Moeda):
+                        objeto.colisao = True
+                        dino.num_moedas += 1
+                        self.pontuacao.pontos = 75
+                        objeto.cordenadas[0] = -10
+
 
             if dino.objRect.colliderect(moeda.objRect):
                 moeda.colisao = True
                 dino.num_moedas += 1
                 self.pontuacao.pontos = 75
-
-            
-            # game over
-            #if dino.vidas == 0:
-                #self.game_over()
-                
-                
-                
-                #self.inicia()
+                objeto.objRect
 
             # atualizar e desenhar
             mapa.loop(screen)
+            for new_object in self.new_objects:
+                new_object.velocidade = allObjects[len(allObjects) - 1].velocidade
+                allObjects.append(new_object)
+                self.new_objects.remove(new_object)
             for objeto in allObjects:
                 objeto.atualizar()
                 objeto.desenha(screen)
-            self.pontuacao.contagem(screen)
-            self.pontuacao.mostrar_moedas(screen,dino.num_moedas)
+                if objeto.objRect.x < -60:
+                    allObjects.remove(objeto)
+            obj = self.gerador.atualizar(allObjects)
+            if obj is not None:
+                self.new_objects.append(obj)
 
-            pygame.display.update()
+            self.pontuacao.contagem(screen)
+            self.pontuacao.mostrar_moedas(screen, dino.num_moedas)
+            pygame.display.flip()
 
             # game over
             if dino.vidas == 0:
@@ -285,8 +302,3 @@ class Menu_Controller():
                 self.game_over()
 
             clock.tick(fps)
-
-        
-
-#jogo = Menu_Controller()
-

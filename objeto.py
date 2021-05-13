@@ -66,16 +66,14 @@ class Objeto():
     def aceleracao(self, A):
         self.__aceleracao = A
 
-    @objRect.setter
-    def objRect(self, obj):
-        self.__objRect = obj
-
     def desenha(self, screen):
         screen.blit(self.imagem[0], self.objRect)
 
     def atualizar(self):
         self.__velocidade += self.__aceleracao
         self.__cordenadas[0] += self.__velocidade
-        self.__objRect = pygame.Rect(self.__cordenadas[0], self.__cordenadas[1], self.__largura, self.__altura)
-        if self.__cordenadas[0] < -100:
-            self.__cordenadas[0] = 1250
+        self.objRect = pygame.Rect.move(self.objRect, self.velocidade, 0)
+
+    @objRect.setter
+    def objRect(self, obj):
+        self.__objRect = obj

@@ -38,8 +38,8 @@ class Background_controller():
         self.__layers.pop(valor)
 
     def loop(self, screen):
-        for layer in range(len(self.__layers)):
-            self.__layers[layer].atualizar()
-            self.__layers[layer].desenha(screen)
+        for layer in self.__layers:
+            layer.atualizar()
+            layer.desenha(screen)
 
 
