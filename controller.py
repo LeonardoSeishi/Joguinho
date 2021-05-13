@@ -292,7 +292,6 @@ class Menu_Controller():
                 objeto.atualizar()
                 objeto.desenha(screen)
                 if objeto.cordenadas[0] < -100:
-                    print(f'Enviando para ser removido {objeto}')
                     to_remove_list.append(objeto)
                     # allObjects.remove(objeto)
             for to_remove in to_remove_list:
