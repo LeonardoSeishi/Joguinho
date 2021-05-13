@@ -163,19 +163,19 @@ class Menu_Controller():
                         dino.largura = 160
 
                     if event.key == pygame.K_LEFT:
-                        if dino.num_moedas < 20:
+                        if dino.num_moedas < 10:
                             dino.set_moldura_escudo(moldura_sheet[0])  
                         else:
                             if not dino.escudo:
-                                dino.num_moedas -= 20
+                                dino.num_moedas -= 10
                             dino.escudo = True
                     
                     if event.key == pygame.K_RIGHT:
-                        if dino.num_moedas < 10:
+                        if dino.num_moedas < 5:
                             dino.set_moldura_double_jump(moldura_sheet[0])
                         else:
                             if not dino.double_jump:
-                                dino.num_moedas -= 10
+                                dino.num_moedas -= 5
                             dino.double_jump = True
                                                  
                                                 
@@ -238,7 +238,7 @@ class Menu_Controller():
         
     def jogar(self):
         pygame.mixer.music.load('musica/musica1_teste.mp3')
-        pygame.mixer.music.set_volume(4)
+        pygame.mixer.music.set_volume(0.3)
         pygame.mixer.music.play(-1)
         self.jogando = True
         self.rodando = False
@@ -272,13 +272,6 @@ class Menu_Controller():
                         dino.num_moedas += 1
                         self.pontuacao.pontos = 75
                         objeto.cordenadas[0] = -100
-
-
-            if dino.objRect.colliderect(moeda.objRect):
-                moeda.colisao = True
-                dino.num_moedas += 1
-                self.pontuacao.pontos = 75
-                objeto.objRect
 
             # atualizar e desenhar
             mapa.loop(screen)
