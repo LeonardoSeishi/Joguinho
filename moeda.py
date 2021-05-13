@@ -30,5 +30,5 @@ class Moeda(Objeto):
         self.cordenadas[0] += self.velocidade
         self.objRect = pygame.Rect(self.cordenadas[0], self.cordenadas[1], self.largura, self.altura)
         if self.__colisao:
-            self.cordenadas[0] = -50
+            self.cordenadas[0] = -200
 

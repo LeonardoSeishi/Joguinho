@@ -11,7 +11,7 @@ class Gerador:
 
     def atualizar(self, todas_entidades):
         self.timer += 1 * self.coeficiente_geracao
-        if self.timer > 35 and len(todas_entidades) < self.total_entidade:
+        if self.timer > 40 and len(todas_entidades) < self.total_entidade:
             self.timer = 0
             index = randint(0, len(self.entidades) - 1)
             entidade, parametros = self.entidades[index]

@@ -237,6 +237,9 @@ class Menu_Controller():
         self.curr_menu.rodar_display = True
         
     def jogar(self):
+        pygame.mixer.music.load('musica/musica1_teste.mp3')
+        pygame.mixer.music.set_volume(4)
+        pygame.mixer.music.play(-1)
         self.jogando = True
         self.rodando = False
         while self.jogando:
@@ -268,7 +271,7 @@ class Menu_Controller():
                         objeto.colisao = True
                         dino.num_moedas += 1
                         self.pontuacao.pontos = 75
-                        objeto.cordenadas[0] = -10
+                        objeto.cordenadas[0] = -100
 
 
             if dino.objRect.colliderect(moeda.objRect):
@@ -279,15 +282,21 @@ class Menu_Controller():
 
             # atualizar e desenhar
             mapa.loop(screen)
+            # print(f'Todos Objetos {len(allObjects)}\nNovos Objetos {len(self.new_objects)}')
             for new_object in self.new_objects:
                 new_object.velocidade = allObjects[len(allObjects) - 1].velocidade
                 allObjects.append(new_object)
                 self.new_objects.remove(new_object)
+            to_remove_list = []
             for objeto in allObjects:
                 objeto.atualizar()
                 objeto.desenha(screen)
-                if objeto.objRect.x < -60:
-                    allObjects.remove(objeto)
+                if objeto.cordenadas[0] < -100:
+                    print(f'Enviando para ser removido {objeto}')
+                    to_remove_list.append(objeto)
+                    # allObjects.remove(objeto)
+            for to_remove in to_remove_list:
+                allObjects.remove(to_remove)
             obj = self.gerador.atualizar(allObjects)
             if obj is not None:
                 self.new_objects.append(obj)
@@ -302,3 +311,4 @@ class Menu_Controller():
                 self.game_over()
 
             clock.tick(fps)
+        pygame.mixer.music.stop()
