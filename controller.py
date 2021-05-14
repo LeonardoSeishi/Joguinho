@@ -23,22 +23,24 @@ icon = pygame.image.load('imagens/jogador/dino.png')
 pygame.display.set_icon(icon)
 
 # imagens
-fundo1 = Background('imagens/background/chao_layer1.png')
-fundo2 = Background('imagens/background/montanha_layer2.png')
-fundo3 = Background('imagens/background/montanha_layer3.png')
-fundo4 = Background('imagens/background/montanha_layer4.png')
-fundo5 = Background('imagens/background/ceu_layer5.png')
-layers = [fundo5,fundo4,fundo3,fundo2,fundo1]
 img_vida = pygame.image.load('imagens/jogador/vida.png')
 img_notvida = pygame.image.load('imagens/jogador/vida_branca.png')
 
 #spritesheet
-
+#background
+background_sprite = Spritesheet('imagens/background/background.png')
+background_sheet = [background_sprite.parse_sprite('background0.png'),background_sprite.parse_sprite('background1.png'),background_sprite.parse_sprite('background2.png'),background_sprite.parse_sprite('background3.png'),background_sprite.parse_sprite('background4.png'),]
 #dinossauro
 dino_sprite = Spritesheet('imagens/jogador/dino_azul.png')
 dino_sheet = [dino_sprite.parse_sprite('dino_azul0.png'),dino_sprite.parse_sprite('dino_azul1.png')]
+dino_escudo = [dino_sprite.parse_sprite('dino_azul2.png'),dino_sprite.parse_sprite('dino_azul3.png')]
+dino_bota = [dino_sprite.parse_sprite('dino_azul4.png'),dino_sprite.parse_sprite('dino_azul5.png')]
+dino_bota_escudo = [dino_sprite.parse_sprite('dino_azul6.png'),dino_sprite.parse_sprite('dino_azul7.png')]
 dinoag_sprite = Spritesheet('imagens/jogador/dino_agachado.png')
 dinoag_sheet = [dinoag_sprite.parse_sprite('dino_agachado0.png'),dinoag_sprite.parse_sprite('dino_agachado1.png')]
+dinoag_bota = [dinoag_sprite.parse_sprite('dino_agachado2.png'),dinoag_sprite.parse_sprite('dino_agachado3.png')]
+dinoag_escudo = [dinoag_sprite.parse_sprite('dino_agachado4.png'),dinoag_sprite.parse_sprite('dino_agachado5.png')]
+dinoag_bota_escudo = [dinoag_sprite.parse_sprite('dino_agachado6.png'),dinoag_sprite.parse_sprite('dino_agachado7.png')]
 #obstaculos
 cacto_sprite = Spritesheet('imagens/obstaculos/cactos.png')
 cacto_sheet = [cacto_sprite.parse_sprite('cactos0.png'),cacto_sprite.parse_sprite('cactos1.png'),cacto_sprite.parse_sprite('cactos2.png')]
@@ -59,7 +61,13 @@ velocidade = -9
 velocidade_pulo = -17
 gravidade = 0.6
 aceleracao = -0.0002
-# intanciando classes
+#intanciando classes
+fundo1 = Background(background_sheet[0])
+fundo2 = Background(background_sheet[1])
+fundo3 = Background(background_sheet[2])
+fundo4 = Background(background_sheet[3])
+fundo5 = Background(background_sheet[4])
+layers = [fundo1,fundo2,fundo3,fundo4,fundo5]
 #def reiniciar():
 dino = Jogador(0, 80, 320, dino_sheet, 128, 120, gravidade, img_vida, poderes_sheet, moldura_sheet, velocidade_pulo)
 cacto = Obstaculo(velocidade, 800, 350, cacto_sheet, 32, 96, aceleracao)
@@ -109,11 +117,11 @@ class Menu_Controller():
         self.curr_menu.rodar_display = True
         self.gerador = Gerador(screen, entidades=[(Obstaculo, (velocidade, 2000, 350, cacto_sheet, 32, 96, aceleracao), 50),
                                                   (Obstaculo, (velocidade - 2, 2500, random_y, passaro_preto_sheet, 48, 48, aceleracao), 20),
-                                                  (Moeda, (velocidade, 1500, 220, moeda_sheet, 48, 48, aceleracao), 30)], coeficiente_geracao=2)
+                                                  (Moeda, (velocidade, 1500, 220, moeda_sheet, 48, 48, aceleracao), 30)], coeficiente_geracao=1.5)
         self.new_objects = []
         self.timer_colisao = 0
         self.total_frames = 0
-
+    
 
 
     def desenha_texto(self,texto, tamanho, x, y):
@@ -153,7 +161,7 @@ class Menu_Controller():
 
                     if event.key == pygame.K_LEFT:
                         if dino.num_moedas < 10:
-                            dino.set_moldura_escudo(moldura_sheet[0])  
+                            dino.set_moldura_escudo(moldura_sheet[0])
                         else:
                             if not dino.escudo:
                                 dino.num_moedas -= 10
@@ -241,6 +249,26 @@ class Menu_Controller():
             if self.timer_colisao > 100:
                 dino.colisao = False
                 self.timer_colisao = 0
+
+            #poder
+            if dino.agachado:
+                if dino.double_jump and dino.escudo:
+                    dino.imagem = dinoag_bota_escudo
+                elif dino.double_jump:
+                    dino.imagem = dinoag_bota
+                elif dino.escudo:
+                    dino.imagem = dinoag_escudo
+                else:
+                    dino.imagem = dinoag_sheet
+            else:
+                if dino.double_jump and dino.escudo:
+                    dino.imagem = dino_bota_escudo
+                elif dino.double_jump:
+                    dino.imagem = dino_bota
+                elif dino.escudo:
+                    dino.imagem = dino_escudo
+                else:
+                    dino.imagem = dino_sheet
 
             # colisao
             for objeto in allObjects:

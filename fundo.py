@@ -1,28 +1,44 @@
-from objeto import Objeto
 import pygame
 
-
-class Background(Objeto):
+class Background():
     def __init__(self, imagem):
-        imgaux = pygame.image.load(imagem).convert_alpha()
-        super().__init__(0, 0, 0, [imgaux], 3500, 500, 0)
-        self.objRect.bottom = 500
-        self.__backLoop = Objeto(0, 0, 0, [imgaux], 3500, 500, 0)
-        self.__backLoop.objRect.bottom = 500
-        self.objRect.right = self.__backLoop.objRect.left 
+        self.__imagem = imagem
+        self.__rect = self.__imagem.get_rect()
+        self.__imagem1 = imagem
+        self.__rect1 = self.__imagem.get_rect()
+        self.__rect.bottom = 500
+        self.__rect1.bottom = 500
+        self.__rect1.left = self.__rect.right
+        self.__velocidade = 0
+        self.__aceleracao = 0
 
+    @property
+    def velocidade(self):
+        return self.__velocidade
+
+    @property
+    def aceleracao(self):
+        return self.__aceleracao
+
+    @velocidade.setter
+    def velocidade(self, v):
+        self.__velocidade = v
+
+    @aceleracao.setter
+    def aceleracao(self, a):
+        self.__aceleracao = a
 
     def desenha(self, screen):
-        super().desenha(screen)
-        self.__backLoop.desenha(screen)
+        screen.blit(self.__imagem,self.__rect)
+        screen.blit(self.__imagem1,self.__rect1)
 
     def atualizar(self):
-        self.velocidade += self.aceleracao
-        self.objRect.left += self.velocidade
-        self.__backLoop.objRect.left += self.velocidade
+        self.__velocidade += self.__aceleracao
+        self.__rect.left += self.__velocidade
+        self.__rect1.left += self.__velocidade
 
-        if self.objRect.right < -10:
-            self.objRect.left = self.__backLoop.objRect.right
+        if self.__rect.right < 0:
+            self.__rect.left = self.__rect1.right
 
-        if self.__backLoop.objRect.right < -10:
-            self.__backLoop.objRect.left = self.objRect.right
+        if self.__rect1.right < 0:
+            self.__rect1.left = self.__rect.right
