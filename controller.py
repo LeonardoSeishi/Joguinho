@@ -108,8 +108,8 @@ class Menu_Controller():
         self.curr_menu = self.main_menu
         self.curr_menu.rodar_display = True
         self.gerador = Gerador(screen, entidades=[(Obstaculo, (velocidade, 2000, 350, cacto_sheet, 32, 96, aceleracao), 50),
-                                                  (Obstaculo, (velocidade - 2, 1500, random_y, passaro_preto_sheet, 48, 48, aceleracao), 20),
-                                                  (Moeda, (velocidade, 1500, 220, moeda_sheet, 48, 48, aceleracao), 20)])
+                                                  (Obstaculo, (velocidade - 2, 2500, random_y, passaro_preto_sheet, 48, 48, aceleracao), 20),
+                                                  (Moeda, (velocidade, 1500, 220, moeda_sheet, 48, 48, aceleracao), 30)], coeficiente_geracao=2)
         self.new_objects = []
         self.timer_colisao = 0
         self.total_frames = 0
