@@ -79,6 +79,11 @@ fps = 60
 
 allObjects = [dino,cacto, moeda]
 
+moedaSound = pygame.mixer.Sound('sons/moeda.mp3')
+gameOverSound = pygame.mixer.Sound('sons/game_over.wav')
+moedaSound.set_volume(0.1)
+danoSound = pygame.mixer.Sound('sons/export.wav')
+danoSound.set_volume(0.5)
 
 def random_y():
     return random.randint(150, 280)
@@ -102,13 +107,13 @@ class Menu_Controller():
         self.final_menu = MenuFim(self)
         self.curr_menu = self.main_menu
         self.curr_menu.rodar_display = True
-        self.gerador = Gerador(screen, entidades=[(Obstaculo, (velocidade, 2000, 350, cacto_sheet, 32, 96, aceleracao)),
-                                                  (Obstaculo, (velocidade - 2, 1500, random_y, passaro_preto_sheet, 48, 48, aceleracao)),
-                                                  (Moeda, (velocidade, 1500, 220, moeda_sheet, 48, 48, aceleracao))])
+        self.gerador = Gerador(screen, entidades=[(Obstaculo, (velocidade, 2000, 350, cacto_sheet, 32, 96, aceleracao), 50),
+                                                  (Obstaculo, (velocidade - 2, 1500, random_y, passaro_preto_sheet, 48, 48, aceleracao), 20),
+                                                  (Moeda, (velocidade, 1500, 220, moeda_sheet, 48, 48, aceleracao), 20)])
         self.new_objects = []
         self.timer_colisao = 0
         self.total_frames = 0
-    
+
 
 
     def desenha_texto(self,texto, tamanho, x, y):
@@ -223,7 +228,7 @@ class Menu_Controller():
         self.curr_menu.rodar_display = True
         
     def jogar(self):
-        pygame.mixer.music.load('musica/musica1_teste.mp3')
+        pygame.mixer.music.load('sons/musica/musica1_teste.mp3')
         pygame.mixer.music.set_volume(0.3)
         pygame.mixer.music.play(-1)
         self.jogando = True
@@ -241,6 +246,7 @@ class Menu_Controller():
             for objeto in allObjects:
                 if dino.objRect.colliderect(objeto.objRect):
                     if isinstance(objeto, Obstaculo) and not dino.colisao:
+                        danoSound.play()
                         dino.colisao = True
                         if not dino.escudo:
                             if dino.vidas == 3:
@@ -254,6 +260,7 @@ class Menu_Controller():
                             dino.escudo = False
                             dino.set_moldura_escudo(moldura_sheet[1])
                     elif isinstance(objeto, Moeda):
+                        moedaSound.play()
                         objeto.colisao = True
                         dino.num_moedas += 1
                         self.pontuacao.pontos = 75
@@ -294,4 +301,5 @@ class Menu_Controller():
                 self.game_over()
 
             clock.tick(fps)
-        pygame.mixer.music.stop()
+        pygame.mixer.music.fadeout(2000)
+        gameOverSound.play()
