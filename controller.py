@@ -43,7 +43,7 @@ class Menu_Controller():
             return random.randint(150, 280)
         self.gerador = Gerador(screen, entidades=[(Obstaculo, (self.v.velocidade, 2000, 350, self.v.cacto_sheet, 32, 96, self.v.aceleracao), 50),
                                                   (Obstaculo, (self.v.velocidade - 2, 2500, random_y, self.v.passaro_preto_sheet, 48, 48, self.v.aceleracao), 20),
-                                                  (Moeda, (self.v.velocidade, 1500, 220, self.v.moeda_sheet, 48, 48, self.v.aceleracao), 0)], coeficiente_geracao=1.5)
+                                                  (Moeda, (self.v.velocidade, 1500, 220, self.v.moeda_sheet, 48, 48, self.v.aceleracao), 20)], coeficiente_geracao=1.5)
         self.new_objects = []
         self.timer_colisao = 0
         self.total_frames = 0
@@ -155,7 +155,7 @@ class Menu_Controller():
         self.curr_menu.rodar_display = True
 
     def jogar(self):
-        pygame.mixer.music.load('sons/musica/musica1_teste.mp3')
+        pygame.mixer.music.load('sons/musica/P2.wav')
         pygame.mixer.music.set_volume(0.3)
         pygame.mixer.music.play(-1)
         self.jogando = True
