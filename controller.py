@@ -155,7 +155,7 @@ class Menu_Controller():
         self.curr_menu.rodar_display = True
 
     def jogar(self):
-        pygame.mixer.music.load('sons/musica/P2.wav')
+        pygame.mixer.music.load('sons/musica/musica_tema.mp3')
         pygame.mixer.music.set_volume(0.4)
         pygame.mixer.music.play(-1)
         self.jogando = True
