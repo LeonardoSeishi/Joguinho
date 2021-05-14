@@ -156,7 +156,7 @@ class Menu_Controller():
 
     def jogar(self):
         pygame.mixer.music.load('sons/musica/P2.wav')
-        pygame.mixer.music.set_volume(0.3)
+        pygame.mixer.music.set_volume(0.4)
         pygame.mixer.music.play(-1)
         self.jogando = True
         self.rodando = False
@@ -342,6 +342,6 @@ class Variaveis:
 
         self.moedaSound = pygame.mixer.Sound('sons/moeda.mp3')
         self.gameOverSound = pygame.mixer.Sound('sons/game_over.wav')
-        self.moedaSound.set_volume(0.1)
+        self.moedaSound.set_volume(0.02)
         self.danoSound = pygame.mixer.Sound('sons/export.wav')
         self.danoSound.set_volume(0.5)
