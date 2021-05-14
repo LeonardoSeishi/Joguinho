@@ -1,7 +1,7 @@
 from fundo import Background
 
 class Background_controller():
-    def __init__(self, layers: [], velocidade: float, aceleracao: float):
+    def __init__(self, layers, velocidade: float, aceleracao: float):
         self.__layers = layers
         self.__velocidade = velocidade
         self.__aceleracao = aceleracao

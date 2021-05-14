@@ -30,7 +30,7 @@ class Menu_Controller():
         self.DOWN_KEY = False
         self.START_KEY = False
         self.BACK_KEY = False
-        self.rodando = True     
+        self.rodando = True
         self.jogando = False
         self.screen = screen
         self.preto = self.v.preto
@@ -47,7 +47,7 @@ class Menu_Controller():
         self.new_objects = []
         self.timer_colisao = 0
         self.total_frames = 0
-    
+
 
 
     def desenha_texto(self,texto, tamanho, x, y):
@@ -64,7 +64,7 @@ class Menu_Controller():
                 self.rodando = False
 
             if event.type == pygame.KEYDOWN:
-                    if self.jogando: 
+                    if self.jogando:
                         if event.key == pygame.K_SPACE or event.key == pygame.K_UP:
                             if (not self.v.dino.pulando and not self.v.dino.agachado) or self.v.dino.double_jump:
                                 self.v.dino.pular()
@@ -92,7 +92,7 @@ class Menu_Controller():
                             if not self.v.dino.escudo:
                                 self.v.dino.num_moedas -= 10
                             self.v.dino.escudo = True
-                    
+
                     if event.key == pygame.K_RIGHT:
                         if self.v.dino.num_moedas < 5:
                             self.v.dino.set_moldura_double_jump(self.v.moldura_sheet[0])
@@ -100,10 +100,10 @@ class Menu_Controller():
                             if not self.v.dino.double_jump:
                                 self.v.dino.num_moedas -= 5
                             self.v.dino.double_jump = True
-                                                 
-                                                
+
+
             if event.type == pygame.KEYUP:
-                    
+
                 if event.key == pygame.K_DOWN:
                     self.DOWN_KEY = False
                     self.v.dino.imagem = self.v.dino_sheet
@@ -128,7 +128,7 @@ class Menu_Controller():
 
 
     def reset_keys(self):
-        self.UP_KEY , self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False , False 
+        self.UP_KEY , self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False , False
 
 
     def game_over(self):
@@ -153,7 +153,7 @@ class Menu_Controller():
         self.curr_menu = self.main_menu
         pygame.display.update()
         self.curr_menu.rodar_display = True
-        
+
     def jogar(self):
         pygame.mixer.music.load('sons/musica/musica1_teste.mp3')
         pygame.mixer.music.set_volume(0.3)
@@ -196,7 +196,6 @@ class Menu_Controller():
                         self.v.danoSound.play()
                         self.v.dino.colisao = True
                         if not self.v.dino.escudo:
-                            self.v.dino.vidas = 0
                             if self.v.dino.vidas == 3:
                                 self.v.dino.set_img_vida3(self.v.img_notvida)
                             elif self.v.dino.vidas == 2:
@@ -257,16 +256,17 @@ class Menu_Controller():
 class Variaveis:
     def __init__(self):
         # imagens
-        self.fundo1 = Background('imagens/background/chao_layer1.png')
-        self.fundo2 = Background('imagens/background/montanha_layer2.png')
-        self.fundo3 = Background('imagens/background/montanha_layer3.png')
-        self.fundo4 = Background('imagens/background/montanha_layer4.png')
-        self.fundo5 = Background('imagens/background/ceu_layer5.png')
-        self.layers = [self.fundo5, self.fundo4, self.fundo3, self.fundo2, self.fundo1]
         self.img_vida = pygame.image.load('imagens/jogador/vida.png')
         self.img_notvida = pygame.image.load('imagens/jogador/vida_branca.png')
 
         # spritesheet
+        # background
+        self.background_sprite = Spritesheet('imagens/background/background.png')
+        self.background_sheet = [self.background_sprite.parse_sprite('background0.png'),
+                            self.background_sprite.parse_sprite('background1.png'),
+                            self.background_sprite.parse_sprite('background2.png'),
+                            self.background_sprite.parse_sprite('background3.png'),
+                            self.background_sprite.parse_sprite('background4.png'), ]
 
         # dinossauro
         self.dino_sprite = Spritesheet('imagens/jogador/dino_azul.png')
@@ -318,18 +318,20 @@ class Variaveis:
         self.gravidade = 0.6
         self.aceleracao = -0.0002
         # intanciando classes
-        # def reiniciar():
+        self.fundo1 = Background(self.background_sheet[0])
+        self.fundo2 = Background(self.background_sheet[1])
+        self.fundo3 = Background(self.background_sheet[2])
+        self.fundo4 = Background(self.background_sheet[3])
+        self.fundo5 = Background(self.background_sheet[4])
+        self.layers = [self.fundo1, self.fundo2, self.fundo3, self.fundo4, self.fundo5]
         self.dino = Jogador(0, 80, 320, self.dino_sheet, 128, 120, self.gravidade, self.img_vida, self.poderes_sheet, self.moldura_sheet,
                        self.velocidade_pulo)
         self.cacto = Obstaculo(self.velocidade, 800, 350, self.cacto_sheet, 32, 96, self.aceleracao)
         self.mapa = Background_controller(self.layers, self.velocidade, self.aceleracao)
         self.moeda = Moeda(self.velocidade, 1000, 220, self.moeda_sheet, 48, 48, self.aceleracao)
         self.mini_moeda = Moeda(0, 970, 25, self.mini_moeda_sheet, 32, 32, 0)
-        # passaro = Obstaculo(velocidade + 2, 800, --range(200,350), 96,96, aceleracao)
 
         self.font = pygame.font.Font("imagens/fonte/PressStart2P-vav7.ttf", 30)
-        # font_lost = pygame.font.Font('freesansbold.ttf', 60)
-        # pontuacao = Pontuacao()
         self.branco = (255, 255, 255)
         self.preto = (0, 0, 0)
         # FPS
