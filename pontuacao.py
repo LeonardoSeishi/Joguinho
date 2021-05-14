@@ -78,8 +78,7 @@ class Pontuacao():
                     break
                     
         
-        score_file.close()            
-        print(self.__data)            
+        score_file.close()                        
         with open (self.__arquivo,'w') as score_file:
             json.dump(self.__data, score_file)
 

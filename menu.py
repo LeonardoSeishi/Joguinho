@@ -12,6 +12,7 @@ class Menu():
         self.imagem_menu = 'imagens/background/imagem_menu.jpg'
         self.imgaux = pygame.image.load(self.imagem_menu).convert_alpha()
         self.img_pontuacao = pygame.image.load('imagens/background/img_pontuacao.jpg').convert_alpha()
+        self.img_game_over = pygame.image.load('imagens/background/img_game_over.jpg').convert_alpha() 
     def mostrar_cursor(self):
         self.jogo.desenha_texto('>', 20, self.cursor_rect.x, self.cursor_rect.y)
         
@@ -156,8 +157,8 @@ class MenuFim(Menu):
     def __init__(self,jogo):
         Menu.__init__(self,jogo)
         self.state = 'Reiniciar'
-        self.reinx, self.reiny = self.meia_w, self.meia_h
-        self.saidax, self.saiday = self.meia_w, self.meia_h + 100
+        self.reinx, self.reiny = self.meia_w, self.meia_h + 60
+        self.saidax, self.saiday = self.meia_w, self.meia_h + 150
         self.cursor_rect.midtop = (self.reinx + self.offset, self.reiny)
         self.pontos = 0
     #def blit_screen_final(self):
@@ -179,12 +180,11 @@ class MenuFim(Menu):
             self.jogo.check_events()
             self.check_input()
             #self.jogo.display.fill((0,0,0))
-            self.jogo.desenha_texto('GAME OVER', 20, 600, 100)
-            self.jogo.desenha_texto(f'pontuacao final: {self.pontos} pontos', 20, 600, 150)
+            self.jogo.desenha_texto(f'pontuacao final: {self.pontos} pontos', 20, 600, 190)
             self.jogo.desenha_texto('Reiniciar', 20, self.reinx, self.reiny)
-            self.jogo.desenha_texto('Sair', 20, self.saidax, self.saiday)
+            self.jogo.desenha_texto('Voltar', 20, self.saidax, self.saiday)
             self.mostrar_cursor()  
-            self.blit_screen(self.imgaux) 
+            self.blit_screen(self.img_game_over) 
             
 
     
