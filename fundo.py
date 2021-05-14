@@ -9,6 +9,8 @@ class Background():
         self.__rect.bottom = 500
         self.__rect1.bottom = 500
         self.__rect1.left = self.__rect.right
+        self.__x = 0
+        self.__x1 = 3500
         self.__velocidade = 0
         self.__aceleracao = 0
 
@@ -29,16 +31,16 @@ class Background():
         self.__aceleracao = a
 
     def desenha(self, screen):
-        screen.blit(self.__imagem,self.__rect)
-        screen.blit(self.__imagem1,self.__rect1)
+        screen.blit(self.__imagem,(self.__x,0))
+        screen.blit(self.__imagem1,(self.__x1,0))
 
     def atualizar(self):
         self.__velocidade += self.__aceleracao
-        self.__rect.left += self.__velocidade
-        self.__rect1.left += self.__velocidade
+        self.__x += self.__velocidade
+        self.__x1 += self.__velocidade
 
-        if self.__rect.right < 0:
-            self.__rect.left = self.__rect1.right
+        if self.__x < -3500:
+            self.__x = self.__x1 + 3500
 
-        if self.__rect1.right < 0:
-            self.__rect1.left = self.__rect.right
+        if self.__x1 < -3500:
+            self.__x1 = self.__x + 3500
