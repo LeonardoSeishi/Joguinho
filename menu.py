@@ -205,10 +205,6 @@ class MenuFim(Menu):
 
 
         if self.jogo.START_KEY:
-            if self.state == 'Reiniciar':
-                self.rodar_display = False
-                self.jogo.jogar()
-
             if self.state == 'saida':
                 self.jogo.menu_inic()
                 self.rodar_display = False
