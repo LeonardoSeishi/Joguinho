@@ -62,7 +62,7 @@ aceleracao = -0.0002
 # intanciando classes
 #def reiniciar():
 dino = Jogador(0, 80, 320, dino_sheet, 128, 120, gravidade, img_vida, poderes_sheet, moldura_sheet, velocidade_pulo)
-cacto = Obstaculo(velocidade, 800, 350, cacto_sheet , 32, 96, aceleracao)
+cacto = Obstaculo(velocidade, 800, 350, cacto_sheet, 32, 96, aceleracao)
 mapa = Background_controller(layers,velocidade, aceleracao)
 moeda = Moeda(velocidade, 1000, 220, moeda_sheet, 48, 48, aceleracao)
 mini_moeda = Moeda(0, 970, 25, mini_moeda_sheet, 32, 32, 0)
@@ -78,6 +78,10 @@ clock = pygame.time.Clock()
 fps = 60
 
 allObjects = [dino,cacto, moeda]
+
+
+def random_y():
+    return random.randint(150, 280)
 
 
 class Menu_Controller():
@@ -99,10 +103,11 @@ class Menu_Controller():
         self.curr_menu = self.main_menu
         self.curr_menu.rodar_display = True
         self.gerador = Gerador(screen, entidades=[(Obstaculo, (velocidade, 2000, 350, cacto_sheet, 32, 96, aceleracao)),
-                                                  (Obstaculo, (velocidade, 1500, random.randint(150, 280), passaro_preto_sheet, 48, 48, aceleracao))])
+                                                  (Obstaculo, (velocidade - 2, 1500, random_y, passaro_preto_sheet, 48, 48, aceleracao)),
+                                                  (Moeda, (velocidade, 1500, 220, moeda_sheet, 48, 48, aceleracao))])
         self.new_objects = []
         self.timer_colisao = 0
-
+        self.total_frames = 0
     
 
 
@@ -254,10 +259,11 @@ class Menu_Controller():
 
             # atualizar e desenhar
             mapa.loop(screen)
-            
+
+            self.total_frames += 1
             # print(f'Todos Objetos {len(allObjects)}\nNovos Objetos {len(self.new_objects)}')
             for new_object in self.new_objects:
-                new_object.velocidade = allObjects[len(allObjects) - 1].velocidade
+                new_object.velocidade += aceleracao * self.total_frames
                 allObjects.append(new_object)
                 self.new_objects.remove(new_object)
             to_remove_list = []
