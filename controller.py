@@ -190,7 +190,8 @@ class Menu_Controller():
     def game_over(self):
         self.pontuacao.pontuacao_final(self.pontuacao.pontos)
         self.menu_pontuacao = MenuPontuacao(self)
-        self.curr_menu = self.final_menu 
+        self.curr_menu = self.final_menu
+        self.curr_menu.pegar_pontos(self.pontuacao.pontos) 
         self.jogando = False
         self.rodando = True
         #dino = Jogador(0, 80, 320, dino_sheet, 128, 120, gravidade, img_vida, poderes_sheet, moldura_sheet, velocidade_pulo)
@@ -200,8 +201,9 @@ class Menu_Controller():
         #mini_moeda = Moeda(0, 970, 25, mini_moeda_sheet, 32, 32, 0)
         #passaro = Obstaculo(velocidade + 2, 800, --range(200,350), 96,96, aceleracao)
         #pontuacao.pontos = 0
-        #self.curr_menu = self.final_menu        
-        self.curr_menu.rodar_display = True
+        #self.curr_menu = self.final_menu
+        self.reset_keys()        
+        #self.curr_menu.rodar_display = True
         #self.reset_keys()
         #pygame.display.update()
     

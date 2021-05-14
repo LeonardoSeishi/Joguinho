@@ -11,7 +11,7 @@ class Menu():
         self.screen = self.jogo.screen
         self.imagem_menu = 'imagens/background/imagem_menu.jpg'
         self.imgaux = pygame.image.load(self.imagem_menu).convert_alpha()
-
+        self.img_pontuacao = pygame.image.load('imagens/background/img_pontuacao.jpg').convert_alpha()
     def mostrar_cursor(self):
         self.jogo.desenha_texto('>', 20, self.cursor_rect.x, self.cursor_rect.y)
         
@@ -37,7 +37,7 @@ class MainMenu(Menu):
 
     def display_menu(self):
         #self.rodar_display = True
-        self.START_KEY = False
+        self.jogo.START_KEY = False
         while self.rodar_display:
             self.jogo.check_events()
             self.check_input()
@@ -103,7 +103,7 @@ class MenuPontuacao(Menu):
         self.arquivo = 'highscore.txt'
         self.data = {}
         self.state = 'Sair'
-        self.sairx, self.sairy = self.meia_w, self.meia_h + 200
+        self.sairx, self.sairy = self.meia_w -340, self.meia_h + 170
         self.cursor_rect.midtop = (self.sairx + self.offset, self.sairy)
         with open(self.arquivo,'r') as score_file:
             self.data = json.load(score_file)
@@ -116,20 +116,20 @@ class MenuPontuacao(Menu):
 
     def display_menu(self):   
         #self.rodar_display = True
-        self.START_KEY = False
+        self.jogo.START_KEY = False
         while self.rodar_display:
             self.jogo.check_events()
             self.check_input()
             #self.jogo.display.fill((0,0,0))
-            self.jogo.desenha_texto('SCORE BOARD', 20, 600, 100)
-            self.jogo.desenha_texto(self.string1, 10 , 600, 150)
-            self.jogo.desenha_texto(self.string2, 10 , 600, 200)
-            self.jogo.desenha_texto(self.string3, 10 , 600, 250)
-            self.jogo.desenha_texto(self.string4, 10 , 600, 300)
-            self.jogo.desenha_texto(self.string5, 10 , 600, 350)
+            #self.jogo.desenha_texto('SCORE BOARD', 20, 600, 100)
+            self.jogo.desenha_texto(self.string1, 15 , 200, 150)
+            self.jogo.desenha_texto(self.string2, 15 , 200, 200)
+            self.jogo.desenha_texto(self.string3, 15 , 200, 250)
+            self.jogo.desenha_texto(self.string4, 15 , 200, 300)
+            self.jogo.desenha_texto(self.string5, 15 , 200, 350)
             self.jogo.desenha_texto('Sair', 20, self.sairx, self.sairy)
             self.mostrar_cursor()  
-            self.blit_screen(self.imgaux) 
+            self.blit_screen(self.img_pontuacao) 
 
     def move_cursor(self):
         if self.jogo.DOWN_KEY:
@@ -159,26 +159,32 @@ class MenuFim(Menu):
         self.reinx, self.reiny = self.meia_w, self.meia_h
         self.saidax, self.saiday = self.meia_w, self.meia_h + 100
         self.cursor_rect.midtop = (self.reinx + self.offset, self.reiny)
-
+        self.pontos = 0
     #def blit_screen_final(self):
         #pygame.display.update()
         #self.jogo.screen.blit(self.jogo.screen, (0, 0))
         #self.jogo.reset_keys()
 
 
+    def pegar_pontos(self, ponto):
+        self.pontos = ponto
+
 
     def display_menu(self):
         #self.rodar_display = True
-        self.START_KEY = False
+        self.jogo.START_KEY = False
+        #self.jogo.UP_KEY = False
+        #self.jogo.DOWN_KEY = False
         while self.rodar_display:
             self.jogo.check_events()
             self.check_input()
             #self.jogo.display.fill((0,0,0))
             self.jogo.desenha_texto('GAME OVER', 20, 600, 100)
+            self.jogo.desenha_texto(f'pontuacao final: {self.pontos} pontos', 20, 600, 150)
             self.jogo.desenha_texto('Reiniciar', 20, self.reinx, self.reiny)
             self.jogo.desenha_texto('Sair', 20, self.saidax, self.saiday)
             self.mostrar_cursor()  
-            self.blit_screen(self.jogo.screen) 
+            self.blit_screen(self.imgaux) 
             
 
     
