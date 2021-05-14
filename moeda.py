@@ -6,7 +6,6 @@ import pygame
 class Moeda(Objeto):
     def __init__(self, velocidade, x, y, imagem, largura, altura, aceleracao):
         super().__init__(velocidade, x, y, imagem, largura, altura, aceleracao)
-        self.__colisao = False
         self.__animacao = 0
         self.__tempo = 0
 
@@ -29,6 +28,4 @@ class Moeda(Objeto):
         self.velocidade += self.aceleracao
         self.cordenadas[0] += self.velocidade
         self.objRect = pygame.Rect(self.cordenadas[0], self.cordenadas[1], self.largura, self.altura)
-        if self.__colisao:
-            self.cordenadas[0] = -200
 
