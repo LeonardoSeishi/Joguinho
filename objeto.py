@@ -3,6 +3,8 @@ import pygame
 
 class Objeto(pygame.sprite.Sprite):
     def __init__(self, velocidade, x, y, imagem, largura, altura, aceleracao):
+        if not isinstance(y, int):
+            y = y()
         self.__cordenadas = [x, y]
         self.__altura = altura
         self.__largura = largura
