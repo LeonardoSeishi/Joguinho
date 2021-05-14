@@ -156,10 +156,9 @@ class MenuPontuacao(Menu):
 class MenuFim(Menu):
     def __init__(self,jogo):
         Menu.__init__(self,jogo)
-        self.state = 'Reiniciar'
-        self.reinx, self.reiny = self.meia_w, self.meia_h + 60
+        self.state = 'saida'
         self.saidax, self.saiday = self.meia_w, self.meia_h + 150
-        self.cursor_rect.midtop = (self.reinx + self.offset, self.reiny)
+        self.cursor_rect.midtop = (self.saidax + self.offset, self.saiday)
         self.pontos = 0
     #def blit_screen_final(self):
         #pygame.display.update()
@@ -180,8 +179,7 @@ class MenuFim(Menu):
             self.jogo.check_events()
             self.check_input()
             #self.jogo.display.fill((0,0,0))
-            self.jogo.desenha_texto(f'pontuacao final: {self.pontos} pontos', 20, 600, 190)
-            self.jogo.desenha_texto('Reiniciar', 20, self.reinx, self.reiny)
+            self.jogo.desenha_texto(f'pontuacao final: {self.pontos} pontos', 20, 600, 240)
             self.jogo.desenha_texto('Voltar', 20, self.saidax, self.saiday)
             self.mostrar_cursor()  
             self.blit_screen(self.img_game_over) 
@@ -195,13 +193,9 @@ class MenuFim(Menu):
         
         if self.jogo.UP_KEY or self.jogo.DOWN_KEY:
 
-            if self.state == 'Reiniciar':
+            if self.state == 'saida':
                 self.state = 'saida'
                 self.cursor_rect.midtop = (self.saidax + self.offset , self.saiday)
-
-            elif self.state == 'saida':
-                self.state = 'Reiniciar'
-                self.cursor_rect.midtop = (self.reinx + self.offset , self.reiny)
 
 
         if self.jogo.START_KEY:
