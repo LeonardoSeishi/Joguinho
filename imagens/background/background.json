@@ -1,0 +1,36 @@
+{"frames":
+    {"background0.png":
+        {"frame":{"x":0,"y":0,"w":3500,"h":500},
+        "rotated":false,
+        "trimmed":false,
+        "spriteSourceSize":{"x":0,"y":0,"w":3500,"h":500},
+        "sourceSize":{"w":3500,"h":500}},
+        
+    "background1.png":
+        {"frame":{"x":0,"y":500,"w":3500,"h":500},
+        "rotated":false,
+        "trimmed":false,
+        "spriteSourceSize":{"x":0,"y":0,"w":3500,"h":500},
+        "sourceSize":{"w":3500,"h":500}},
+        
+    "background2.png":
+        {"frame":{"x":0,"y":1000,"w":3500,"h":500},
+        "rotated":false,
+        "trimmed":false,
+        "spriteSourceSize":{"x":0,"y":0,"w":3500,"h":500},
+        "sourceSize":{"w":3500,"h":500}},
+       
+    "background3.png":
+        {"frame":{"x":0,"y":1500,"w":3500,"h":500},
+        "rotated":false,
+        "trimmed":false,
+        "spriteSourceSize":{"x":0,"y":0,"w":3500,"h":500},
+        "sourceSize":{"w":3500,"h":500}},
+
+    "background4.png":
+        {"frame":{"x":0,"y":2000,"w":3500,"h":500},
+        "rotated":false,
+        "trimmed":false,
+        "spriteSourceSize":{"x":0,"y":0,"w":3500,"h":500},
+        "sourceSize":{"w":3500,"h":500}}
+    }}

@@ -23,17 +23,13 @@ icon = pygame.image.load('imagens/jogador/dino.png')
 pygame.display.set_icon(icon)
 
 # imagens
-fundo1 = Background('imagens/background/chao_layer1.png')
-fundo2 = Background('imagens/background/montanha_layer2.png')
-fundo3 = Background('imagens/background/montanha_layer3.png')
-fundo4 = Background('imagens/background/montanha_layer4.png')
-fundo5 = Background('imagens/background/ceu_layer5.png')
-layers = [fundo5,fundo4,fundo3,fundo2,fundo1]
 img_vida = pygame.image.load('imagens/jogador/vida.png')
 img_notvida = pygame.image.load('imagens/jogador/vida_branca.png')
 
 #spritesheet
-
+#background
+background_sprite = Spritesheet('imagens/background/background.png')
+background_sheet = [background_sprite.parse_sprite('background0.png'),background_sprite.parse_sprite('background1.png'),background_sprite.parse_sprite('background2.png'),background_sprite.parse_sprite('background3.png'),background_sprite.parse_sprite('background4.png'),]
 #dinossauro
 dino_sprite = Spritesheet('imagens/jogador/dino_azul.png')
 dino_sheet = [dino_sprite.parse_sprite('dino_azul0.png'),dino_sprite.parse_sprite('dino_azul1.png')]
@@ -65,7 +61,13 @@ velocidade = -9
 velocidade_pulo = -17
 gravidade = 0.6
 aceleracao = -0.0002
-# intanciando classes
+#intanciando classes
+fundo1 = Background(background_sheet[0])
+fundo2 = Background(background_sheet[1])
+fundo3 = Background(background_sheet[2])
+fundo4 = Background(background_sheet[3])
+fundo5 = Background(background_sheet[4])
+layers = [fundo1,fundo2,fundo3,fundo4,fundo5]
 #def reiniciar():
 dino = Jogador(0, 80, 320, dino_sheet, 128, 120, gravidade, img_vida, poderes_sheet, moldura_sheet, velocidade_pulo)
 cacto = Obstaculo(velocidade, 800, 350, cacto_sheet, 32, 96, aceleracao)
