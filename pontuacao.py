@@ -31,11 +31,6 @@ class Pontuacao():
         texto_rect.center = (1100, 40)
         return screen.blit(texto, texto_rect)
 
-    def mostrar_pontuacao(self, screen):
-        texto_f = self.__font_f.render('Pontuação final: ' + str(self.__pontos), True, (0,0,0))
-        texto_f_rect = texto_f.get_rect()
-        texto_f_rect.center = (550, 250)
-        return screen.blit(texto_f,texto_f_rect)
 
     def mostrar_moedas(self, screen, num_moedas):
         texto_f = self.__font_moeda.render('' + str(int(num_moedas)), True, (255,255,255))

@@ -7,7 +7,7 @@ class Menu():
         self.meia_w, self.meia_h = 600,250
         self.rodar_display = True
         self.cursor_rect = pygame.Rect(0,0,150,150)
-        self.offset = - 100
+        self.offset = - 120
         self.screen = self.jogo.screen
         self.imagem_menu = 'imagens/background/imagem_menu.jpg'
         self.imgaux = pygame.image.load(self.imagem_menu).convert_alpha()
@@ -30,9 +30,9 @@ class MainMenu(Menu):
     def __init__(self,jogo):
         Menu.__init__(self,jogo)
         self.state = 'Inicio'
-        self.iniciox, self.inicioy = self.meia_w, self.meia_h -30
-        self.pontuacaox, self.pontuacaoy = self.meia_w, self.meia_h + 70
-        self.sairx, self.sairy = self.meia_w, self.meia_h + 200
+        self.iniciox, self.inicioy = self.meia_w, self.meia_h -100
+        self.pontuacaox, self.pontuacaoy = self.meia_w, self.meia_h -10
+        self.sairx, self.sairy = self.meia_w, self.meia_h + 158
         self.cursor_rect.midtop = (self.iniciox + self.offset, self.inicioy)
         
 
@@ -43,9 +43,9 @@ class MainMenu(Menu):
             self.jogo.check_events()
             self.check_input()
             #self.jogo.display.fill(self.jogo.preto)
-            self.jogo.desenha_texto('Start Game', 20, self.iniciox, self.inicioy)
-            self.jogo.desenha_texto('Pontuacao', 20, self.pontuacaox, self.pontuacaoy)
-            self.jogo.desenha_texto('Sair', 20, self.sairx, self.sairy)
+            self.jogo.desenha_texto('Start Game', 35, self.iniciox, self.inicioy)
+            self.jogo.desenha_texto('Pontuacao', 35, self.pontuacaox, self.pontuacaoy)
+            self.jogo.desenha_texto('Sair', 35, self.sairx, self.sairy)
             self.mostrar_cursor()  
             self.blit_screen(self.imgaux) 
             
@@ -123,12 +123,12 @@ class MenuPontuacao(Menu):
             self.check_input()
             #self.jogo.display.fill((0,0,0))
             #self.jogo.desenha_texto('SCORE BOARD', 20, 600, 100)
-            self.jogo.desenha_texto(self.string1, 15 , 200, 150)
-            self.jogo.desenha_texto(self.string2, 15 , 200, 200)
-            self.jogo.desenha_texto(self.string3, 15 , 200, 250)
-            self.jogo.desenha_texto(self.string4, 15 , 200, 300)
-            self.jogo.desenha_texto(self.string5, 15 , 200, 350)
-            self.jogo.desenha_texto('Sair', 20, self.sairx, self.sairy)
+            self.jogo.desenha_texto(self.string1, 30 , 200, 150)
+            self.jogo.desenha_texto(self.string2, 30 , 200, 200)
+            self.jogo.desenha_texto(self.string3, 30 , 200, 250)
+            self.jogo.desenha_texto(self.string4, 30 , 200, 300)
+            self.jogo.desenha_texto(self.string5, 30 , 200, 350)
+            self.jogo.desenha_texto('Sair', 30, self.sairx, self.sairy)
             self.mostrar_cursor()  
             self.blit_screen(self.img_pontuacao) 
 
@@ -179,8 +179,8 @@ class MenuFim(Menu):
             self.jogo.check_events()
             self.check_input()
             #self.jogo.display.fill((0,0,0))
-            self.jogo.desenha_texto(f'pontuacao final: {self.pontos} pontos', 20, 600, 240)
-            self.jogo.desenha_texto('Voltar', 20, self.saidax, self.saiday)
+            self.jogo.desenha_texto(f'pontuacao final: {self.pontos} pontos', 30, 600, 240)
+            self.jogo.desenha_texto('Voltar', 40, self.saidax, self.saiday)
             self.mostrar_cursor()  
             self.blit_screen(self.img_game_over) 
             

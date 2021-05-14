@@ -142,7 +142,7 @@ class Jogador(Objeto):
         else:
             self.__framerate_moldura1 += 1
             self.__moldura_escudo = self.__moldura[self.__anim_moldura1]
-            if self.__framerate_moldura1 == 60:   
+            if self.__framerate_moldura1 == 75:   
                 if self.__anim_moldura1 == 9:
                     self.__escudo = False
                     self.__moldura_escudo = self.__moldura[1]
@@ -156,7 +156,7 @@ class Jogador(Objeto):
         else:
             self.__framerate_moldura2 += 1
             self.__moldura_double_jump = self.__moldura[self.__anim_moldura2]
-            if self.__framerate_moldura2 == 75: 
+            if self.__framerate_moldura2 == 60: 
                 if self.__anim_moldura2 == 9:
                     self.__double_jump = False
                     self.__moldura_double_jump = self.__moldura[1]

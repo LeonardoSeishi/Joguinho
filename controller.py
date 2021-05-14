@@ -15,7 +15,7 @@ from spritesheet import Spritesheet
 # titulo e icone
 pygame.init()
 screen = pygame.display.set_mode((1200,500))
-pygame.display.set_caption("jogo do dinossaurinho")
+pygame.display.set_caption("DINO RUNNER")
 icon = pygame.image.load('imagens/jogador/dino.png')
 pygame.display.set_icon(icon)
 
@@ -42,7 +42,8 @@ class Menu_Controller():
         def random_y():
             return random.randint(150, 280)
         self.gerador = Gerador(screen, entidades=[(Obstaculo, (self.v.velocidade, 2000, 350, self.v.cacto_sheet, 32, 96, self.v.aceleracao), 50),
-                                                  (Obstaculo, (self.v.velocidade - 2, 2500, random_y, self.v.passaro_preto_sheet, 48, 48, self.v.aceleracao), 20),
+                                                  (Obstaculo, (self.v.velocidade - 2, 2500, random_y, self.v.passaro_preto_sheet, 48, 48, self.v.aceleracao), 10),
+                                                  (Obstaculo, (self.v.velocidade - 2, 2500, random_y, self.v.passaro_marrom_sheet, 48, 48, self.v.aceleracao), 10),
                                                   (Moeda, (self.v.velocidade, 1500, 220, self.v.moeda_sheet, 48, 48, self.v.aceleracao), 20)], coeficiente_geracao=1.5)
         self.new_objects = []
         self.timer_colisao = 0
@@ -51,7 +52,8 @@ class Menu_Controller():
 
 
     def desenha_texto(self,texto, tamanho, x, y):
-        superficie_texto = self.v.font.render(texto, True, (0,0,0))
+        fonte = pygame.font.Font("imagens/fonte/PressStart2P-vav7.ttf", tamanho)
+        superficie_texto = fonte.render(texto, True, (255,255,255))
         text_rect = superficie_texto.get_rect()
         text_rect.center = (x,y)
         self.screen.blit(superficie_texto,text_rect)
@@ -67,6 +69,7 @@ class Menu_Controller():
                     if self.jogando:
                         if event.key == pygame.K_SPACE or event.key == pygame.K_UP:
                             if (not self.v.dino.pulando and not self.v.dino.agachado) or self.v.dino.double_jump:
+                                self.v.puloSound.play()
                                 self.v.dino.pular()
 
                     if event.key == pygame.K_RETURN:
@@ -90,6 +93,7 @@ class Menu_Controller():
                             self.v.dino.set_moldura_escudo(self.v.moldura_sheet[0])
                         else:
                             if not self.v.dino.escudo:
+                                self.v.poderSound.play()
                                 self.v.dino.num_moedas -= 10
                             self.v.dino.escudo = True
 
@@ -98,6 +102,7 @@ class Menu_Controller():
                             self.v.dino.set_moldura_double_jump(self.v.moldura_sheet[0])
                         else:
                             if not self.v.dino.double_jump:
+                                self.v.poderSound.play()
                                 self.v.dino.num_moedas -= 5
                             self.v.dino.double_jump = True
 
@@ -165,7 +170,7 @@ class Menu_Controller():
 
             if self.v.dino.colisao:
                 self.timer_colisao += 1
-            if self.timer_colisao > 100:
+            if self.timer_colisao > 30:
                 self.v.dino.colisao = False
                 self.timer_colisao = 0
 
@@ -227,7 +232,7 @@ class Menu_Controller():
             for objeto in self.v.allObjects:
                 objeto.atualizar()
                 objeto.desenha(screen)
-                if objeto.cordenadas[0] < -100:
+                if objeto.cordenadas[0] < -220:
                     to_remove_list.append(objeto)
             for to_remove in to_remove_list:
                 self.v.allObjects.remove(to_remove)
@@ -239,6 +244,8 @@ class Menu_Controller():
             self.v. mini_moeda.desenha(screen)
             self.pontuacao.contagem(screen)
             self.pontuacao.mostrar_moedas(screen, self.v.dino.num_moedas)
+            self.desenha_texto('10',15,430,75)
+            self.desenha_texto('5',15,510,75)
             pygame.display.flip()
 
             # game over
@@ -330,7 +337,6 @@ class Variaveis:
         self.moeda = Moeda(self.velocidade, 1000, 220, self.moeda_sheet, 48, 48, self.aceleracao)
         self.mini_moeda = Moeda(0, 970, 25, self.mini_moeda_sheet, 32, 32, 0)
 
-        self.font = pygame.font.Font("imagens/fonte/PressStart2P-vav7.ttf", 30)
         self.branco = (255, 255, 255)
         self.preto = (0, 0, 0)
         # FPS
@@ -344,3 +350,7 @@ class Variaveis:
         self.moedaSound.set_volume(0.02)
         self.danoSound = pygame.mixer.Sound('sons/export.wav')
         self.danoSound.set_volume(0.5)
+        self.puloSound = pygame.mixer.Sound('sons/pulo.wav')
+        self.puloSound.set_volume(0.5)
+        self.poderSound = pygame.mixer.Sound('sons/poder.mp3')
+        self.poderSound.set_volume(0.5)
