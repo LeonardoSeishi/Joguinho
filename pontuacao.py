@@ -9,7 +9,7 @@ class Pontuacao():
         self.__font = pygame.font.Font("imagens/fonte/PressStart2P-vav7.ttf", 12)
         self.__font_f = pygame.font.Font("imagens/fonte/PressStart2P-vav7.ttf", 15)
         self.__font_moeda = pygame.font.Font("imagens/fonte/PressStart2P-vav7.ttf", 10)
-        self.__arquivo = 'highscore.txt'
+        self.__arquivo = 'highscore.json'
         self.__data = {}
         
     @property

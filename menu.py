@@ -101,7 +101,7 @@ class MainMenu(Menu):
 class MenuPontuacao(Menu):
     def __init__(self,jogo):
         Menu.__init__(self,jogo)
-        self.arquivo = 'highscore.txt'
+        self.arquivo = 'highscore.json'
         self.data = {}
         self.state = 'Sair'
         self.sairx, self.sairy = self.meia_w -340, self.meia_h + 170

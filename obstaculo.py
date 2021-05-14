@@ -19,9 +19,3 @@ class Obstaculo(Objeto):
                 self.__animacao = (self.__animacao + 1) % len(self.imagem)
             screen.blit(self.imagem[self.__animacao], self.objRect)
 
-    def atualizar(self):
-        self.velocidade += self.aceleracao
-        self.cordenadas[0] += self.velocidade
-        self.objRect = pygame.Rect.move(self.objRect, self.velocidade, 0)
-
-

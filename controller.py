@@ -229,7 +229,6 @@ class Menu_Controller():
                 objeto.desenha(screen)
                 if objeto.cordenadas[0] < -100:
                     to_remove_list.append(objeto)
-                    # allObjects.remove(objeto)
             for to_remove in to_remove_list:
                 self.v.allObjects.remove(to_remove)
             obj = self.gerador.atualizar(self.v.allObjects)
