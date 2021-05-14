@@ -43,7 +43,8 @@ dinoag_sheet = [dinoag_sprite.parse_sprite('dino_agachado0.png'),dinoag_sprite.p
 cacto_sprite = Spritesheet('imagens/obstaculos/cactos.png')
 cacto_sheet = [cacto_sprite.parse_sprite('cactos0.png'),cacto_sprite.parse_sprite('cactos1.png'),cacto_sprite.parse_sprite('cactos2.png')]
 passaro_sprite = Spritesheet('imagens/obstaculos/passarinho.png')
-passaro_sheet = [passaro_sprite.parse_sprite('passarinho0.png'),passaro_sprite.parse_sprite('passarinho1.png'),passaro_sprite.parse_sprite('passarinho2.png'),passaro_sprite.parse_sprite('passarinho3.png')]
+passaro_preto_sheet = [passaro_sprite.parse_sprite('passarinho0.png'),passaro_sprite.parse_sprite('passarinho1.png')]
+passaro_marrom_sheet = [passaro_sprite.parse_sprite('passarinho2.png'),passaro_sprite.parse_sprite('passarinho3.png')]
 #itens
 moeda_sprite = Spritesheet('imagens/itens/Coin.png')
 moeda_sheet = [moeda_sprite.parse_sprite('Coin0.png'),moeda_sprite.parse_sprite('Coin1.png'),moeda_sprite.parse_sprite('Coin2.png'),moeda_sprite.parse_sprite('Coin3.png'),moeda_sprite.parse_sprite('Coin4.png'),moeda_sprite.parse_sprite('Coin5.png'),moeda_sprite.parse_sprite('Coin6.png'),moeda_sprite.parse_sprite('Coin7.png'),moeda_sprite.parse_sprite('Coin8.png')]
@@ -76,7 +77,7 @@ preto = (0,0,0)
 clock = pygame.time.Clock()
 fps = 60
 
-allObjects = [dino, cacto, moeda]
+allObjects = [dino,cacto, moeda]
 
 
 class Menu_Controller():
@@ -98,7 +99,7 @@ class Menu_Controller():
         self.curr_menu = self.main_menu
         self.curr_menu.rodar_display = True
         self.gerador = Gerador(screen, entidades=[(Obstaculo, (velocidade, 2000, 350, cacto_sheet, 32, 96, aceleracao)),
-                                                  (Moeda, (velocidade, 1500, 220, moeda_sheet, 48, 48, aceleracao))])
+                                                  (Obstaculo, (velocidade, 1500, random.randint(150, 280), passaro_preto_sheet, 48, 48, aceleracao))])
         self.new_objects = []
         self.timer_colisao = 0
 
@@ -253,12 +254,14 @@ class Menu_Controller():
 
             # atualizar e desenhar
             mapa.loop(screen)
+            
             # print(f'Todos Objetos {len(allObjects)}\nNovos Objetos {len(self.new_objects)}')
             for new_object in self.new_objects:
                 new_object.velocidade = allObjects[len(allObjects) - 1].velocidade
                 allObjects.append(new_object)
                 self.new_objects.remove(new_object)
             to_remove_list = []
+
             for objeto in allObjects:
                 objeto.atualizar()
                 objeto.desenha(screen)
@@ -271,6 +274,8 @@ class Menu_Controller():
             if obj is not None:
                 self.new_objects.append(obj)
 
+            mini_moeda.atualizar()
+            mini_moeda.desenha(screen)
             self.pontuacao.contagem(screen)
             self.pontuacao.mostrar_moedas(screen, dino.num_moedas)
             pygame.display.flip()

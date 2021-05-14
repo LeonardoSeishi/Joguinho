@@ -1,8 +1,7 @@
 from abc import ABC, abstractmethod
 import pygame
 
-class Objeto():
-
+class Objeto(pygame.sprite.Sprite):
     def __init__(self, velocidade, x, y, imagem, largura, altura, aceleracao):
         self.__cordenadas = [x, y]
         self.__altura = altura
@@ -66,6 +65,10 @@ class Objeto():
     def aceleracao(self, A):
         self.__aceleracao = A
 
+    @objRect.setter
+    def objRect(self, obj):
+        self.__objRect = obj
+
     def desenha(self, screen):
         screen.blit(self.imagem[0], self.objRect)
 
@@ -74,6 +77,3 @@ class Objeto():
         self.__cordenadas[0] += self.__velocidade
         self.objRect = pygame.Rect.move(self.objRect, self.velocidade, 0)
 
-    @objRect.setter
-    def objRect(self, obj):
-        self.__objRect = obj
