@@ -102,30 +102,8 @@ class Menu_Controller():
         self.new_objects = []
         self.timer_colisao = 0
 
-        #Swhile self.rodando:
-            #self.curr_menu.display_menu()
-
-
-
-    #def menu_pont(self):
-        #self.curr_menu = self.menu_pontuacao
-        #self.curr_menu.display_menu()
-        #print('aaa')
-
-
-        #while self.rodando:
-            #self.curr_menu.display_menu()
-
-
-
-
-    #def menu_inic(self):
-        #self.curr_menu = self.main_menu
-        #self.curr_menu.display_menu()
-
-
-
     
+
 
     def desenha_texto(self,texto, tamanho, x, y):
         superficie_texto = font.render(texto, True, (0,0,0))

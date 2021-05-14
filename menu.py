@@ -87,12 +87,14 @@ class MainMenu(Menu):
             if self.state == 'Inicio':
                 self.jogo.jogar()
                 self.rodar_display = False
+
             elif self.state == 'Pontuacao':
                 self.jogo.men_pontuacao()
                 self.rodar_display = False
+
             elif self.state == 'Sair':
                 self.rodar_display = False
-
+                self.jogo.rodando = False
             #self.rodar_display = False   
 
 class MenuPontuacao(Menu):
