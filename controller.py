@@ -197,13 +197,13 @@ class Menu_Controller():
                         self.v.dino.colisao = True
                         if not self.v.dino.escudo:
                             self.v.dino.vidas = 0
-                            # if dino.vidas == 3:
-                            #     dino.set_img_vida3(img_notvida)
-                            # elif dino.vidas == 2:
-                            #     dino.set_img_vida2(img_notvida)
-                            # elif dino.vidas == 1:
-                            #     dino.set_img_vida1(img_notvida)
-                            # dino.vidas = dino.vidas - 1
+                            if self.v.dino.vidas == 3:
+                                self.v.dino.set_img_vida3(self.v.img_notvida)
+                            elif self.v.dino.vidas == 2:
+                                self.v.dino.set_img_vida2(self.v.img_notvida)
+                            elif self.v.dino.vidas == 1:
+                                self.v.dino.set_img_vida1(self.v.img_notvida)
+                            self.v.dino.vidas = self.v.dino.vidas - 1
                         else:
                             self.v.dino.escudo = False
                             self.v.dino.set_moldura_escudo(self.v.moldura_sheet[1])
